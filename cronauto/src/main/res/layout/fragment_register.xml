@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pad_36"
+            android:layout_marginRight="@dimen/pad_36"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black_50"
+                android:layout_marginTop="@dimen/pad_12"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/st_12_black_50">
+
+                <com.dpcsa.jura.compon.custom_components.ComponEditText
+                    android:id="@+id/last_name"
+                    style="@style/st_16_black"
+                    android:theme="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/black_50"
+                    android:hint="@string/surname_z"
+                    android:imeOptions="actionNext"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:typeValidate="filled"
+                    app:textError="@string/er_surname"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black_50"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/st_12_black_50">
+                <com.dpcsa.jura.compon.custom_components.ComponEditText
+                    android:id="@+id/name"
+                    style="@style/st_16_black"
+                    android:theme="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/name_z"
+                    android:textColorHint="@color/black_50"
+                    app:typeValidate="filled"
+                    app:textError="@string/er_name"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black_50"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/st_12_black_50">
+                <com.dpcsa.jura.compon.custom_components.ComponEditText
+                    android:id="@+id/second_name"
+                    style="@style/st_16_black"
+                    android:theme="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/patronymic_z"
+                    android:textColorHint="@color/black_50"
+                    app:typeValidate="filled"
+                    app:textError="@string/er_patronymic"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Phone -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black_50"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/st_12_black_50">
+
+                <com.dpcsa.jura.compon.custom_components.EditTextMask
+                    android:id="@+id/phone"
+                    android:theme="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_18"
+                    android:textColorHint="@color/black_50"
+                    android:hint="@string/your_phone_z"
+                    android:imeOptions="actionNext"
+                    app:textError="@string/er_phone_r"
+                    app:mask="+380 __ ___ __ __"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black_50"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/st_12_black_50">
+                <com.dpcsa.jura.compon.custom_components.ComponEditText
+                    android:id="@+id/email"
+                    style="@style/st_16_black"
+                    android:theme="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_z"
+                    android:imeOptions="actionNext"
+                    android:textColorHint="@color/black_50"
+                    android:inputType="textEmailAddress"
+                    app:typeValidate="email"
+                    app:textError="@string/er_email_r"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black_50"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/st_12_black_50">
+
+                <com.dpcsa.jura.compon.custom_components.ComponEditText
+                    android:id="@+id/city"
+                    style="@style/st_16_black"
+                    android:theme="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/city_z"
+                    android:imeOptions="actionDone"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/black_50"
+                    app:textError="@string/er_city"
+                    app:typeValidate="filled" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/done"
+                style="@style/st_button"
+                android:letterSpacing="0.14"
+                android:layout_marginTop="@dimen/pad_24"
+                android:layout_marginBottom="@dimen/pad_24"
+                android:text="@string/sign_up"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.dpcsa.jura.compon.custom_components.SheetBottom
+        android:id="@+id/send_ok"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:fadedScreenColor="@color/white_70"
+        app:showTime="2000"
+        app:viewId="@layout/info_send"/>
+
+</RelativeLayout>

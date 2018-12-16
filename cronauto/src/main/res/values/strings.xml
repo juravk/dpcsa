@@ -1,0 +1,214 @@
+<resources>
+    <string name="app_name">Cron_auto_С</string>
+    <string name="hint_id">Id</string>
+    <string name="hint_name">Название</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="duplicate">Дублировать</string>
+    <string name="send_order">Отправить заказ</string>
+    <string name="order">Заказ №\u0020</string>
+    <string name="sum">Сумма:\u0020</string>
+    <string name="bonuses">Бонусов:\u0020</string>
+    <string name="comment">Комментарий</string>
+    <string name="currency">\u0020\u20b4</string>
+
+    // MENU
+    <string name="m_catalog">Каталог</string>
+    <string name="m_profile">Профиль</string>
+    <string name="m_e_bonus">Экстра-бонус</string>
+    <string name="m_new_items">Новинки</string>
+    <string name="m_present">Подарки</string>
+    <string name="m_my_product">Мои товары</string>
+    <string name="m_log_orders">Журнал заказов</string>
+    <string name="m_mutual">Взаиморасчеты</string>
+    <string name="m_news">Новости</string>
+    <string name="m_bonus_system">Бонусная система</string>
+    <string name="m_how_to_buy">Как купить</string>
+    <string name="m_contacts">Контакты</string>
+
+    // CONTACTS
+    <string name="contacts">Контакты</string>
+    <string name="of_adr">ул. Буковая 40, Харьков</string>
+    <string name="of_mail">sales@kron.kh.ua</string>
+    <string name="of_phone">057-341-10-16 057-341-10-40</string>
+
+    // Error text
+    <string name="er_filled">Нужно заполнить</string>
+    <string name="er_lenght">Количество знаков в поле\u0020</string>
+    <string name="er_email">Неправильный адрес email</string>
+    <string name="er_phone">Неправильный номер телефона</string>
+    <string name="er_login">Неверный логин</string>
+    <string name="er_password">Неверный пароль</string>
+    <string name="er_surname">Поле Фамилия заполненно неправильно</string>
+    <string name="er_name">Поле Имя заполненно неправильно</string>
+    <string name="er_patronymic">Поле Отчество заполненно неправильно</string>
+    <string name="er_email_r">Поле Email заполненно неправильно</string>
+    <string name="er_city">Поле Город заполненно неправильно</string>
+    <string name="er_phone_r">Поле Телефон заполненно неправильно</string>
+    <string name="attention">Внимание</string>
+    <string name="voice_recognizer_not_present">Устройство распознавания голоса отсутствует</string>
+    <string name="no_connection_error">Ошибка соединения</string>
+    <string name="timeout_error">Большое время ожибания</string>
+    <string name="servererror">Ошибка сервера</string>
+    <string name="auth_error">Ошибка авторизации</string>
+    <string name="unrecognized_error">Неопознанная ошибка</string>
+    <string name="status">Статус\u0020</string>
+
+    <!--// Auth-->
+    <string name="phone">Телефон</string>
+    <string name="contin">Продолжить</string>
+    <string name="register">Регистрация</string>
+    <string name="surname_z">Фамилия*</string>
+    <string name="name_z">Имя*</string>
+    <string name="patronymic_z">Отчество*</string>
+    <string name="your_phone_z">Ваш телефон*</string>
+    <string name="email_z">Email*</string>
+    <string name="city_z">Город*</string>
+
+    // LOGIN
+    <string name="auth">Авторизация</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="send">Выслать</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="submitted">Ваша заявка отправлена!</string>
+    <string name="we_will_contact">Мы свяжемся с Вами\nв ближайшее время.</string>
+    <string name="you_agree1">Нажимая Зарегистрироваться Вы</string>
+    <string name="you_agree2">соглашаетесь с\u0020</string>
+    <string name="you_agree3">Условиями соглашения</string>
+    <string name="you_agree">Условия соглашения</string>
+    <string name="recovery">Восстановление пароля</string>
+    <string name="enter_login_or_email">Введите Логин или Email. Контрольная строка для смены пароля, а также ваши регистрационные данные, будут высланы вам по Email.</string>
+
+    // FILTERS
+    <string name="filter">Фильтр</string>
+    <string name="brand">Бренд</string>
+    <string name="select_category">Выбрать категорию</string>
+    <string name="car_brand">Марка авто</string>
+    <string name="car_brand_1">Марка</string>
+    <string name="model">Модели</string>
+    <string name="select_car_brand">Выбрать марку и модель авто</string>
+    <string name="product_1">товар</string>
+    <string name="product_2_4">товара</string>
+    <string name="product_5_9">товаров</string>
+    <string name="reset">Сбросить</string>
+
+    // Profile
+    <string name="surname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="patronymic">Отчество</string>
+    <string name="email">Email</string>
+    <string name="city">Город</string>
+
+    // MUTUAL PAYMENT
+    <string name="mutual_payment">Взаиморасчеты</string>
+    <string name="name_mutual">Название</string>
+    <string name="total_mutual">Итого</string>
+    <string name="date_mutual">Дата</string>
+    <string name="balance_mutual">Нач. остаток</string>
+    <string name="coming_mutual">Приход</string>
+    <string name="consumption_mutual">Расход</string>
+    <string name="final_balance_mutual">Кон. остаток</string>
+
+    // INDEX
+    <string name="search">Поиск</string>
+    <string name="all_news">Все новинки</string>
+    <string name="all_bonus">Все бонусы</string>
+    <string name="catalog">Каталог</string>
+    <string name="productTab">Товары</string>
+    <string name="change_bd_product">Обновление базы данных по продуктам</string>
+    <string name="change_bd_analog">Обновление базы данных аналогов</string>
+    <string name="change_bd_catalog">Обновление базы данных каталога</string>
+    <string name="change_bd_brand">Обновление базы данных брендов</string>
+    <string name="change_bd_bonus">Обновление базы данных бонусов</string>
+    <string name="change_bd_news">Обновление базы данных новостей</string>
+    <string name="change_bd_orders">Обновление базы данных заказов</string>
+    <string name="change_bd_mutual">Обновление базы данных взаиморасчетов</string>
+    <string name="result_find">Результаты поиска</string>
+
+    // BONUS SYSTEM
+    <string name="bonus_system">Бонусная система</string>
+    <string name="threshold_value">Значение порога</string>
+    <string name="bonus_proc">Бонус,%</string>
+    <string name="bonus_present">Подарок</string>
+
+    // ADD PRODUCT
+    <string name="add_product">Добавление товара</string>
+    <string name="product_add_in_order">Товар добавлен в заказ\u0020</string>
+    <string name="code">Код\u0020</string>
+    <string name="oem">ОЕМ</string>
+    <string name="count">Количество</string>
+    <string name="add">Добавить</string>
+    <string name="price">Цена</string>
+    <string name="bonus">Бонус</string>
+    <string name="total">Итого</string>
+    <string name="create_new">Создать новый</string>
+
+    // LOG ORDER
+    <string name="new_ord">Новый</string>
+    <string name="accepted">Принят</string>
+    <string name="recl_bonus">Возьми на сумму 7500 получи бонус 1,5 %\nЗакажи 40 позиций получи 1 % бонусов</string>
+    <string name="pay_bonus">Оплатить бонусами</string>
+    <string name="order_log">Журнал заказов</string>
+    <string name="date">Дата</string>
+    <string name="from">С</string>
+    <string name="before">По</string>
+    <string name="close">Закрыть</string>
+    <string name="cancel">Отмена</string>
+    <string name="select_status">Выберите статус</string>
+    <string name="all">Все</string>
+    <string name="apply">Применить</string>
+    <string name="send_ord">Отправить</string>
+    <string name="order_history">История заказов</string>
+
+    // HowBuy
+    <string name="how_buy">Как купить</string>
+    <string name="product_select">1  Подбор товара</string>
+    <string name="forming_order">2  Формирование заказа</string>
+    <string name="ordering">3  Оформление заказа</string>
+    <string name="mutual">4 Взаиморасчеты</string>
+    <string name="how_catalog">5  Каталог</string>
+
+    // NEWS
+    <string name="news">Новости</string>
+
+    // BARCODE scanner
+    <string name="barcode_place">Поместите штрихкод в поле</string>
+    <string name="barcode_scan">Применить</string>
+    <string name="repeat">Повторить</string>
+    <string name="search_barcode">Поиск по штрихкоду</string>
+
+    // PRODUCT DESCRIPT
+    <string name="catalog_code">Каталожный номер</string>
+    <string name="descript">Описание</string>
+    <string name="character">Характеристки</string>
+    <string name="change_bd_character">Обновление базы данных характеристик</string>
+    <string name="remainder">Остаток</string>
+    <string name="more_residue">Внимание! Заказываемое количество, превышает доступные остатки. Недостающее количество будет зарезервировано и поставлено. Возможно изменение стоимости в связи с изменением цены поступления.</string>
+    <string name="analog">Аналоги</string>
+    <string name="not_analog">Аналогов нет</string>
+
+    <string-array name="prod_grammar">
+        <item>товар</item>
+        <item>товара</item>
+        <item>товаров</item>
+    </string-array>
+
+    <string-array name="auth_tab_name">
+        <item>Вход</item>
+        <item>Регистрация</item>
+    </string-array>
+
+    <string-array name="descript_tab_name">
+        <item>Описание</item>
+        <item>Характеристки</item>
+    </string-array>
+
+    <string-array name="index_tab_name">
+        <item>Новинки</item>
+        <item>Экстра-бонус</item>
+        <item>Каталог</item>
+    </string-array>
+</resources>

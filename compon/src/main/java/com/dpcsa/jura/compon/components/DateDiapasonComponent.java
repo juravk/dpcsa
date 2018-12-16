@@ -1,0 +1,23 @@
+package com.dpcsa.jura.compon.components;
+
+import com.dpcsa.jura.compon.base.BaseComponent;
+import com.dpcsa.jura.compon.base.Screen;
+import com.dpcsa.jura.compon.interfaces_classes.IBase;
+import com.dpcsa.jura.compon.json_simple.Field;
+import com.dpcsa.jura.compon.param.ParamComponent;
+
+public class DateDiapasonComponent extends BaseComponent{
+    public DateDiapasonComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
+        super(iBase, paramMV, multiComponent);
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void changeData(Field field) {
+
+    }
+}
