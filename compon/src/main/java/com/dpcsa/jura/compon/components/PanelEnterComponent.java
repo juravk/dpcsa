@@ -22,7 +22,7 @@ public class PanelEnterComponent extends BaseComponent {
     public void initView() {
         viewComponent = (View) parentLayout.findViewById(paramMV.paramView.viewId);
         if (viewComponent == null) {
-            iBase.log("Не найдена панель в " + paramMV.nameParentComponent);
+            iBase.log("Не найдена панель в " + multiComponent.nameComponent);
         } else {
             if (paramMV.paramModel != null && paramMV.paramModel.method == paramMV.paramModel.FIELD) {
                 workWithRecordsAndViews.RecordToView((Record) paramMV.paramModel.field.value,

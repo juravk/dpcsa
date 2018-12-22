@@ -1,9 +1,9 @@
 package com.dpcsa.jura.compon.base;
 
 import android.text.Html;
-import android.util.Log;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.network.CacheWork;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.IBase;
 import com.dpcsa.jura.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.jura.compon.json_simple.Field;
@@ -12,12 +12,12 @@ import com.dpcsa.jura.compon.json_simple.JsonSyntaxException;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamModel;
 import com.dpcsa.jura.compon.providers.VolleyInternetProvider;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
+import com.dpcsa.jura.compon.single.Injector;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.dpcsa.jura.compon.json_simple.Field.TYPE_CLASS;
 import static com.dpcsa.jura.compon.json_simple.Field.TYPE_STRING;
 
 public class BasePresenter implements BaseInternetProvider.InternetProviderListener {
@@ -31,7 +31,10 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
     protected JsonSimple jsonSimple = new JsonSimple();
     protected String nameJson, json, url;
     protected int method;
-
+    private ComponGlob componGlob;
+    private ComponPrefTool preferences;
+    private CacheWork cacheWork;
+    
     public BasePresenter(IBase iBase, ParamModel paramModel,
                          Map<String, String> headersPar, Record data, IPresenterListener listener) {
         this.iBase = iBase;
@@ -43,28 +46,31 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
             headers = new HashMap<>();
         }
 
-        String nameToken = ComponGlob.getInstance().appParams.nameTokenInHeader;
-        String token = ComponPrefTool.getSessionToken();
+        componGlob = Injector.getComponGlob();
+        preferences = Injector.getPreferences();
+        cacheWork = Injector.getCacheWork();
+        String nameToken = componGlob.appParams.nameTokenInHeader;
+        String token = preferences.getSessionToken();
         if (nameToken.length() > 0 && token.length() > 0) {
 //            headers.put(nameToken, "bceee76d3c7d761c9ec92c286fb8bebcefb4225c311bb87e");
             headers.put(nameToken, token);
         }
-        String nameLanguage = ComponGlob.getInstance().appParams.nameLanguageInHeader;
+        String nameLanguage = componGlob.appParams.nameLanguageInHeader;
         if (nameLanguage.length() > 0) {
-            headers.put(nameLanguage, ComponGlob.getInstance().language);
+            headers.put(nameLanguage, componGlob.language);
         }
 
         this.method = paramModel.method;
         long duration = paramModel.duration;
         if (method == ParamModel.GET) {
-            String st = ComponGlob.getInstance().installParam(paramModel.param, paramModel.typeParam, paramModel.url);
+            String st = componGlob.installParam(paramModel.param, paramModel.typeParam, paramModel.url);
             url = paramModel.url + st;
         } else {
             url = paramModel.url;
         }
         if (duration > 0) {
             nameJson = url;
-            json = ComponGlob.getInstance().cacheWork.getJson(nameJson);
+            json = cacheWork.getJson(nameJson);
             if (json == null) {
                 startInternetProvider();
             } else {
@@ -122,7 +128,7 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
             iBase.showDialog("", "no response", null);
         }
         if (paramModel.duration > 0) {
-            ComponGlob.getInstance().cacheWork.addCasche(url,
+            cacheWork.addCasche(url,
                     paramModel.duration, response);
         }
         if ( ! isCanceled) {

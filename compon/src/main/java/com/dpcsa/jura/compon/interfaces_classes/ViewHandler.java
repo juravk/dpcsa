@@ -1,5 +1,6 @@
 package com.dpcsa.jura.compon.interfaces_classes;
 
+import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.param.ParamModel;
 
 public class ViewHandler {
@@ -11,7 +12,9 @@ public class ViewHandler {
         CLICK_VIEW, MAP_ROUTE, SHOW, BROADCAST, RECEIVER, CLICK_CUSTOM, DEL_RECYCLER,
         CLICK_SEND, SEND_UPDATE, SEND_CHANGE_BACK, ACTUAL}
     public TYPE type;
-    public String nameFragment;
+//    public String nameFragment;
+    public String nameFieldScreen;
+    public Screen screen;
     public ParamModel paramModel;
     public SendAndUpdate sendAndUpdate;
     public enum TYPE_PREFER {BOOLEAN, STRING};
@@ -32,7 +35,7 @@ public class ViewHandler {
     public ViewHandler(String nameField) {
         type = TYPE.FIELD_WITH_NAME_FRAGMENT;
         this.viewId = 0;
-        this.nameFragment = nameField;
+        this.nameFieldScreen = nameField;
     }
 
     public ViewHandler(TYPE type) {
@@ -40,19 +43,19 @@ public class ViewHandler {
         this.viewId = 0;
     }
 
-    public ViewHandler(int viewId, String nameFragment) {
+    public ViewHandler(int viewId, Screen screen) {
         type = TYPE.NAME_FRAGMENT;
         paramForScreen = TYPE_PARAM_FOR_SCREEN.NONE;
         this.viewId = viewId;
-        this.nameFragment = nameFragment;
+        this.screen = screen;
     }
 
-    public ViewHandler(int viewId, String nameFragment, ActionsAfterResponse afterResponse) {
+    public ViewHandler(int viewId, Screen screen, ActionsAfterResponse afterResponse) {
         type = TYPE.NAME_FRAGMENT;
         paramForScreen = TYPE_PARAM_FOR_SCREEN.NONE;
         this.afterResponse = afterResponse;
         this.viewId = viewId;
-        this.nameFragment = nameFragment;
+        this.screen = screen;
     }
 
     public ViewHandler(int viewId, ExecMethod execMethod) {
@@ -62,20 +65,20 @@ public class ViewHandler {
         this.execMethod = execMethod;
     }
 
-    public ViewHandler(int viewId, String nameFragment, TYPE_PARAM_FOR_SCREEN paramForScreen) {
+    public ViewHandler(int viewId, Screen screen, TYPE_PARAM_FOR_SCREEN paramForScreen) {
         type = TYPE.NAME_FRAGMENT;
         this.paramForScreen = paramForScreen;
         this.viewId = viewId;
-        this.nameFragment = nameFragment;
+        this.screen = screen;
     }
 
-    public ViewHandler(int viewId, String nameFragment, TYPE_PARAM_FOR_SCREEN paramForScreen,
+    public ViewHandler(int viewId, Screen screen, TYPE_PARAM_FOR_SCREEN paramForScreen,
                        ActionsAfterResponse afterResponse) {
         type = TYPE.NAME_FRAGMENT;
         this.paramForScreen = paramForScreen;
         this.afterResponse = afterResponse;
         this.viewId = viewId;
-        this.nameFragment = nameFragment;
+        this.screen = screen;
     }
 
     public ViewHandler(int viewId, ParamModel paramModel) {
@@ -96,18 +99,18 @@ public class ViewHandler {
         this.paramModel = paramModel;
     }
 
-    public ViewHandler(int viewId, TYPE type, ParamModel paramModel, String nameScreen) {
+    public ViewHandler(int viewId, TYPE type, ParamModel paramModel, Screen screen) {
         this.type = type;
         this.viewId = viewId;
-        this.nameFragment = nameScreen;
+        this.screen = screen;
         this.paramModel = paramModel;
     }
 
     public ViewHandler(int viewId, TYPE type, ParamModel paramModel,
-                       String nameScreen, boolean changeEnabled, int... mustValid) {
+                       Screen screen, boolean changeEnabled, int... mustValid) {
         this.type = type;
         this.viewId = viewId;
-        this.nameFragment = nameScreen;
+        this.screen = screen;
         this.mustValid = mustValid;
         this.changeEnabled = changeEnabled;
         this.paramModel = paramModel;

@@ -10,7 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.components.RecyclerComponent;
 import com.dpcsa.jura.compon.interfaces_classes.AnimatePanel;
 import com.dpcsa.jura.compon.interfaces_classes.ICustom;
@@ -33,8 +33,9 @@ import com.dpcsa.jura.compon.json_simple.JsonSimple;
 import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.presenter.ListPresenter;
+import com.dpcsa.jura.compon.single.Injector;
 import com.dpcsa.jura.compon.tools.Constants;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 
 import java.util.List;
 
@@ -60,6 +61,9 @@ public abstract class BaseComponent {
     public View viewComponent;
     public Field argument;
     public Screen multiComponent;
+    public ComponGlob componGlob;
+    public BaseDB baseDB;
+    public ComponPrefTool preferences;
 //    public Multiply[] multiplies;
 
     public WorkWithRecordsAndViews workWithRecordsAndViews = new WorkWithRecordsAndViews();
@@ -67,6 +71,9 @@ public abstract class BaseComponent {
     public BaseComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent){
         this.paramMV = paramMV;
         this.multiComponent = multiComponent;
+        componGlob = Injector.getComponGlob();
+        baseDB = Injector.getBaseDB();
+        preferences = Injector.getPreferences();
         navigator = paramMV.navigator;
         paramMV.baseComponent = this;
         this.iBase = iBase;
@@ -191,7 +198,7 @@ public abstract class BaseComponent {
                             }
                         }
                     }
-                    ComponGlob.getInstance().baseDB.get(iBase, paramModel, setParam(paramModel.param, paramScreen), listener);
+                    baseDB.get(iBase, paramModel, setParam(paramModel.param, paramScreen), listener);
                     break;
                 default: {
                     new BasePresenter(iBase, paramModel, null, null, listener);
@@ -230,7 +237,7 @@ public abstract class BaseComponent {
 
     private String getGlobalParam(String name) {
         String st = null;
-        List<Param> paramV = ComponGlob.getInstance().paramValues;
+        List<Param> paramV = componGlob.paramValues;
         for (Param par : paramV) {
             if (par.name.equals(name)) {
                 st = par.value;
@@ -340,12 +347,12 @@ public abstract class BaseComponent {
                             break;
                         case NAME_FRAGMENT:
                             if (recordComponent != null) {
-                                ComponGlob.getInstance().setParam(recordComponent);
+                                componGlob.setParam(recordComponent);
                             }
                             if (vh.paramForScreen == ViewHandler.TYPE_PARAM_FOR_SCREEN.RECORD) {
-                                iBase.startScreen(vh.nameFragment, false, recordComponent);
+                                iBase.startScreen(vh.screen, false, recordComponent);
                             } else {
-                                iBase.startScreen(vh.nameFragment, false);
+                                iBase.startScreen(vh.screen, false);
                             }
                             break;
                         case BACK:
@@ -368,9 +375,9 @@ public abstract class BaseComponent {
                                 selectViewHandler = vh;
                                 param = workWithRecordsAndViews.ViewToRecord(viewComponent, vh.paramModel.param);
                                 Record rec = setRecord(param);
-                                ComponGlob.getInstance().setParam(rec);
+                                componGlob.setParam(rec);
                                 if (vh.paramModel.method == POST_DB) {
-                                    ComponGlob.getInstance().baseDB.insertRecord(vh.paramModel.url, rec);
+                                    baseDB.insertRecord(vh.paramModel.url, rec);
                                     listener_send_back_screen.onResponse(null);
                                 } else {
                                     new BasePresenter(iBase, vh.paramModel, null, rec, listener_send_back_screen);
@@ -404,15 +411,15 @@ public abstract class BaseComponent {
                             }
                             break;
                         case SET_PARAM:
-                            ComponGlob.getInstance().setParam(record);
+                            componGlob.setParam(record);
                             break;
                         case FIELD_WITH_NAME_FRAGMENT:
                             if (listPresenter != null) {
                                 listPresenter.ranCommand(ListPresenter.Command.SELECT,
                                         position, null);
                             } else {
-                                ComponGlob.getInstance().setParam(record);
-                                iBase.startScreen((String) record.getValue(vh.nameFragment), false);
+                                componGlob.setParam(record);
+                                iBase.startScreen((Screen) record.getValue(vh.nameFieldScreen), false);
                             }
                             break;
                         case RESULT_RECORD :
@@ -422,14 +429,14 @@ public abstract class BaseComponent {
                             activity.finishActivity();
                             break;
                         case RESULT_PARAM :
-                            ComponGlob.getInstance().setParam(record);
+                            componGlob.setParam(record);
                             activity.setResult(Activity.RESULT_OK);
                             activity.finishActivity();
                             break;
                         case MODEL_PARAM:
                             ParamModel pm = vh.paramModel;
                             if (pm.method == DEL_DB) {
-                                ComponGlob.getInstance().baseDB.deleteRecord(iBase, pm, setParam(pm.param, record));
+                                baseDB.deleteRecord(iBase, pm, setParam(pm.param, record));
                             }
                             break;
                         case ACTUAL:
@@ -443,11 +450,11 @@ public abstract class BaseComponent {
                             break;
                         case NAME_FRAGMENT:
 //                            Log.d("QWERT","clickAdapter record="+record.toString());
-                            ComponGlob.getInstance().setParam(record);
+                            componGlob.setParam(record);
                             if (vh.paramForScreen == ViewHandler.TYPE_PARAM_FOR_SCREEN.RECORD) {
-                                iBase.startScreen(vh.nameFragment, false, record);
+                                iBase.startScreen(vh.screen, false, record);
                             } else {
-                                iBase.startScreen(vh.nameFragment, false);
+                                iBase.startScreen(vh.screen, false);
                             }
                             break;
                         case CLICK_VIEW:
@@ -487,7 +494,7 @@ public abstract class BaseComponent {
         Record rec = new Record();
         for (Field f : paramRecord) {
             if (f.value == null) {
-                String st = ComponGlob.getInstance().getParamValue(f.name);
+                String st = componGlob.getParamValue(f.name);
                 if (st.length() > 0) {
                     rec.add(new Field(f.name, Field.TYPE_STRING, st));
                 }
@@ -505,20 +512,20 @@ public abstract class BaseComponent {
                 for (ViewHandler vh : selectViewHandler.afterResponse.viewHandlers) {
                     switch (vh.type) {
                         case NAME_FRAGMENT:
-                            iBase.startScreen(vh.nameFragment, false);
+                            iBase.startScreen(vh.screen, false);
                             break;
                         case PREFERENCE_SET_TOKEN:
                             Record rec = ((Record) response.value);
                             String st = rec.getString(vh.nameFieldWithValue);
                             if (st != null) {
-                                ComponPrefTool.setSessionToken(st);
+                                preferences.setSessionToken(st);
                             }
                             break;
                         case PREFERENCE_SET_NAME:
                             rec = ((Record) response.value);
                             st = rec.getString(vh.nameFieldWithValue);
                             if (st != null) {
-                                ComponPrefTool.setNameString(vh.nameFieldWithValue, st);
+                                preferences.setNameString(vh.nameFieldWithValue, st);
                             }
                             break;
                         case ASSIGN_VALUE :
@@ -551,7 +558,7 @@ public abstract class BaseComponent {
         String[] par = param.split(",");
         if (par.length > 0) {
             for (String nameField : par) {
-                String value = ComponGlob.getInstance().getParamValue(nameField);
+                String value = componGlob.getParamValue(nameField);
                 if (value.length() > 0) {
                     rec.add(new Field(nameField, Field.TYPE_STRING, value));
                 }

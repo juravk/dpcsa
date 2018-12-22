@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
 import com.dpcsa.jura.compon.base.Screen;
+import com.dpcsa.jura.compon.single.Injector;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -36,7 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.jura.compon.interfaces_classes.ActivityResult;
@@ -50,7 +51,6 @@ import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamComponent;
 import com.dpcsa.jura.compon.param.ParamMap;
 import com.dpcsa.jura.compon.tools.Constants;
-import com.dpcsa.jura.compon.tools.StaticVM;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -67,23 +67,25 @@ public class MapComponent extends BaseComponent {
     private String nameApiParamLat, nameApiParamLon;
     private View clickInfoWindow;
     private Marker selectMarker;
+    private static ComponGlob componGlob;
 
     private MarkerOptions myMarker;
     private double ofset = 0;
 
     public MapComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
+        componGlob = Injector.getComponGlob();
     }
 
     @Override
     public void initView() {
         if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            mapView = (MapView) StaticVM.findViewByName(parentLayout, "map");
+            mapView = (MapView) componGlob.findViewByName(parentLayout, "map");
         } else {
             mapView = (MapView) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (mapView == null) {
-            iBase.log("Не найден MapView в " + paramMV.nameParentComponent);
+            iBase.log("Не найден MapView в " + multiComponent.nameComponent);
         }
         listData = new ListRecords();
         paramMap = paramMV.paramMap;
@@ -152,7 +154,7 @@ public class MapComponent extends BaseComponent {
             if (paramMap.clickInfoWindowId != 0) {
                 clickInfoWindow = parentLayout.findViewById(paramMap.clickInfoWindowId);
                 if (clickInfoWindow == null) {
-                    iBase.log("Не найден clickInfoWindow в " + paramMV.nameParentComponent);
+                    iBase.log("Не найден clickInfoWindow в " + multiComponent.nameComponent);
                 } else {
                     googleMap.setOnMarkerClickListener(markerClickListener);
                 }
@@ -194,8 +196,8 @@ public class MapComponent extends BaseComponent {
 
     private void setParamApi(double lat, double lon) {
         if (nameApiParamLat != null && nameApiParamLat.length() > 0) {
-            ComponGlob.getInstance().addParamValue(nameApiParamLat, String.valueOf(lat));
-            ComponGlob.getInstance().addParamValue(nameApiParamLon, String.valueOf(lon));
+            componGlob.addParamValue(nameApiParamLat, String.valueOf(lat));
+            componGlob.addParamValue(nameApiParamLon, String.valueOf(lon));
         }
     }
 

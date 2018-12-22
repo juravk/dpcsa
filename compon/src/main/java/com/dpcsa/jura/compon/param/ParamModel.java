@@ -1,10 +1,11 @@
 package com.dpcsa.jura.compon.param;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.DataFieldGet;
 import com.dpcsa.jura.compon.interfaces_classes.Filters;
 import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.Record;
+import com.dpcsa.jura.compon.single.Injector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class ParamModel <T> {
     public String updateTable, updateUrl, updateAlias, updateSet;
     public String[] urlArray;
     public int urlArrayIndex = -1;
+    private ComponGlob componGlob;
 
     public Filters filters;
 //    public FilterParam[] filterParams;
@@ -128,7 +130,7 @@ public class ParamModel <T> {
                     || method == GET_DB) {
                 this.url = url;
             } else {
-                this.url = ComponGlob.getInstance().appParams.baseUrl + url;
+                this.url = Injector.getComponGlob().appParams.baseUrl + url;
             }
 //            if (method == POST) {
 //                this.url = url;
@@ -206,9 +208,10 @@ public class ParamModel <T> {
 
     public ParamModel pagination() {
         isPagination = true;
-        paginationPerPage = ComponGlob.getInstance().appParams.paginationPerPage;
-        paginationNameParamPerPage = ComponGlob.getInstance().appParams.paginationNameParamPerPage;
-        paginationNameParamNumberPage = ComponGlob.getInstance().appParams.paginationNameParamNumberPage;
+        componGlob = Injector.getComponGlob();
+        paginationPerPage = componGlob.appParams.paginationPerPage;
+        paginationNameParamPerPage = componGlob.appParams.paginationNameParamPerPage;
+        paginationNameParamNumberPage = componGlob.appParams.paginationNameParamNumberPage;
         return this;
     }
 

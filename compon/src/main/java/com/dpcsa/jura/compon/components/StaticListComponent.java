@@ -9,7 +9,6 @@ import com.dpcsa.jura.compon.interfaces_classes.IBase;
 import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.param.ParamComponent;
-import com.dpcsa.jura.compon.tools.StaticVM;
 
 public class StaticListComponent extends BaseComponent {
     StaticList staticList;
@@ -22,12 +21,12 @@ public class StaticListComponent extends BaseComponent {
     @Override
     public void initView() {
         if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            staticList = (StaticList) StaticVM.findViewByName(parentLayout, "baseStaticList");
+            staticList = (StaticList) componGlob.findViewByName(parentLayout, "baseStaticList");
         } else {
             staticList = (StaticList) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (staticList == null) {
-            iBase.log("Не найден StaticList в " + paramMV.nameParentComponent);
+            iBase.log("Не найден StaticList в " + multiComponent.nameComponent);
             return;
         }
         listData = new ListRecords();

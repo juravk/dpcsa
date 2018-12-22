@@ -14,6 +14,7 @@ public class Field {
     public static final int TYPE_DATE = 8;
     public static final int TYPE_RECORD = 9;
     public static final int TYPE_LIST_FIELD = 10;
+    public static final int TYPE_SCREEN = 11;
 
     public static final int TYPE_NULL = 20;
 

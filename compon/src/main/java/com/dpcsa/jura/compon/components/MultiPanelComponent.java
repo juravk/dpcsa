@@ -32,7 +32,7 @@ public class MultiPanelComponent extends BaseComponent {
         mInflater = (LayoutInflater) (iBase.getBaseActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         viewComponent = (ViewGroup) parentLayout.findViewById(paramMV.paramView.viewId);
         if (viewComponent == null) {
-            iBase.log("Не найдена панель в " + paramMV.nameParentComponent);
+            iBase.log("Не найдена панель в " + multiComponent.nameComponent);
         }
     }
 
@@ -74,7 +74,7 @@ public class MultiPanelComponent extends BaseComponent {
                             ((BaseActivity) activity).closeDrawer();
                             break;
                         case NAME_FRAGMENT :
-                            iBase.startScreen(vh.nameFragment, false);
+                            iBase.startScreen(vh.screen, false);
                             break;
                     }
                 }

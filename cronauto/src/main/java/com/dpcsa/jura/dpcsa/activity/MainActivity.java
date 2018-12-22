@@ -1,14 +1,20 @@
 package com.dpcsa.jura.dpcsa.activity;
 
-import com.dpcsa.jura.dpcsa.params.CronListScreens;
+import com.dpcsa.jura.compon.base.Screen;
+import com.dpcsa.jura.dpcsa.CronApp;
 import com.dpcsa.jura.compon.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
     @Override
-    public String getNameScreen() {
-        return CronListScreens.SPLASH;
+    public Screen getScreen() {
+        return CronApp.getInstance().getCronDeclareScreens().SPLASH;
     }
+//    @Override
+//    public String getNameScreen() {
+//        String st = CronDeclareScreens.SPLASH.nameComponent;
+//        return CronDeclareScreens.SPLASH;
+//    }
 
 //    @Override
 //    public void initView() {

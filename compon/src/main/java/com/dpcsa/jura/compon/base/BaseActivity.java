@@ -21,9 +21,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.dpcsa.jura.compon.single.Injector;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.R;
 import com.dpcsa.jura.compon.dialogs.DialogTools;
 import com.dpcsa.jura.compon.interfaces_classes.ActionsAfterResponse;
@@ -46,9 +47,8 @@ import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.json_simple.SimpleRecordToJson;
 import com.dpcsa.jura.compon.json_simple.WorkWithRecordsAndViews;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 import com.dpcsa.jura.compon.tools.Constants;
-import com.dpcsa.jura.compon.tools.StaticVM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,20 +73,24 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     private GoogleApiClient googleApiClient;
     private List<AnimatePanel> animatePanelList;
     public DrawerLayout drawer;
-    public ComponGlob componGlob = ComponGlob.getInstance();
-    public String TAG = componGlob.appParams.NAME_LOG_APP;
+    public ComponGlob componGlob;
+    public String TAG;
     public List<RequestActivityResult> activityResultList;
     public List<RequestPermissionsResult> permissionsResultList;
     public Field paramScreen;
     public WorkWithRecordsAndViews workWithRecordsAndViews;
     public Record paramScreenRecord;
     public List<OnResumePause> resumePauseList;
+    private ComponPrefTool preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         parentModelList = new ArrayList<>();
+        preferences = Injector.getPreferences();
+        componGlob = Injector.getComponGlob();
+        TAG = componGlob.appParams.NAME_LOG_APP;
         mapFragment = componGlob.MapScreen;
         animatePanelList = new ArrayList<>();
         activityResultList = null;
@@ -99,7 +103,6 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         workWithRecordsAndViews = new WorkWithRecordsAndViews();
         String paramJson = intent.getStringExtra(Constants.NAME_PARAM_FOR_SCREEN);
         if (paramJson != null && paramJson.length() >0) {
-//            Log.d("QWERT","BaseActivity paramJson="+paramJson);
             JsonSimple jsonSimple = new JsonSimple();
             try {
                 paramScreen = jsonSimple.jsonToModel(paramJson);
@@ -112,22 +115,23 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if (st != null && st.length() > 0) {
             setLocale();
         }
-        String nameScreen = getNameScreen();
-        if (nameScreen == null) {
-            nameScreen = intent.getStringExtra(Constants.NAME_MVP);
-        }
+        mComponent = getScreen();
+        if (mComponent == null) {
+            String nameScreen = getNameScreen();
+            if (nameScreen == null) {
+                nameScreen = intent.getStringExtra(Constants.NAME_MVP);
+            }
 
-        if (nameScreen != null && nameScreen.length() > 0) {
-            mComponent = getComponent(nameScreen);
+            if (nameScreen != null && nameScreen.length() > 0) {
+                mComponent = getComponent(nameScreen);
+            }
+        }
+        if (mComponent != null) {
             if (mComponent.typeView == Screen.TYPE_VIEW.CUSTOM_ACTIVITY) {
                 parentLayout = inflate(this, getLayoutId(), null);
             } else {
                 parentLayout = inflate(this, mComponent.fragmentLayoutId, null);
             }
-        } else {
-            parentLayout = inflate(this, getLayoutId(), null);
-        }
-        if (nameScreen != null) {
             setContentView(parentLayout);
             if (mComponent.navigator != null) {
                 for (ViewHandler vh : mComponent.navigator.viewHandlers) {
@@ -146,7 +150,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if (this instanceof ICustom) {
             mComponent.setCustom((ICustom) this);
         }
-        TextView title = (TextView) StaticVM.findViewByName(parentLayout, "title");
+        TextView title = (TextView) componGlob.findViewByName(parentLayout, "title");
         if (title != null && mComponent.title != null) {
             if (mComponent.args != null && mComponent.args.length > 0) {
                 title.setText(String.format(mComponent.title, setFormatParam(mComponent.args)));
@@ -160,7 +164,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     public void setLocale() {
-        String loc = ComponPrefTool.getLocale();
+        String loc = preferences.getLocale();
         if (loc.length() == 0) {
             loc = "uk";
         }
@@ -183,6 +187,10 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     public String getNameScreen() {
+        return null;
+    }
+
+    public Screen getScreen() {
         return null;
     }
 
@@ -296,9 +304,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                                 requestCode = addForResult(vh.afterResponse, activityResult);
                             }
                             if (vh.paramForScreen == ViewHandler.TYPE_PARAM_FOR_SCREEN.RECORD) {
-                                startScreen(vh.nameFragment, false, paramScreenRecord, requestCode);
+                                startScreen(vh.screen, false, paramScreenRecord, requestCode);
                             } else {
-                                startScreen(vh.nameFragment, false, null, requestCode);
+                                startScreen(vh.screen, false, null, requestCode);
                             }
                             break;
                         case BACK:
@@ -321,7 +329,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                         case RESULT_PARAM :
                             Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
                             if (record != null) {
-                                ComponGlob.getInstance().setParam(record);
+                                componGlob.setParam(record);
                             }
                             setResult(RESULT_OK);
                             finishActivity();
@@ -379,7 +387,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     @Override
     public void onResume() {
         super.onResume();
-        int statusBarColor = ComponPrefTool.getStatusBarColor();
+        int statusBarColor = preferences.getStatusBarColor();
         if (statusBarColor != 0) {
             setStatusBarColor(statusBarColor);
         }
@@ -406,7 +414,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     public void setStatusColor(int color) {
-        ComponPrefTool.setStatusBarColor(color);
+        preferences.setStatusBarColor(color);
     }
 
     @Override
@@ -647,21 +655,21 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     @Override
-    public void startDrawerFragment(String nameMVP, int containerFragmentId) {
-        Screen model = mapFragment.get(nameMVP);
+    public void startDrawerFragment(Screen model, int containerFragmentId) {
+//        Screen model = mapFragment.get(nameMVP);
         BaseFragment fragment = new BaseFragment();
         fragment.setModel(model);
         Bundle bundle =new Bundle();
-        bundle.putString(Constants.NAME_MVP, nameMVP);
+        bundle.putString(Constants.NAME_MVP, model.nameComponent);
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(containerFragmentId, fragment, nameMVP);
+        transaction.replace(containerFragmentId, fragment, model.nameComponent);
         transaction.commit();
     }
 
     @Override
-    public void startScreen(String nameMVP, boolean startFlag) {
-        startScreen(nameMVP, startFlag, null, -1);
+    public void startScreen(Screen screen, boolean startFlag) {
+        startScreen(screen, startFlag, null, -1);
     }
 
     public void setStatusBarColor(int color) {
@@ -673,13 +681,14 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     @Override
-    public void startScreen(String nameMVP, boolean startFlag, Object object) {
-        startScreen(nameMVP, startFlag, object, -1);
+    public void startScreen(Screen screen, boolean startFlag, Object object) {
+        startScreen(screen, startFlag, object, -1);
     }
 
     @Override
-    public void startScreen(String nameMVP, boolean startFlag, Object object, int forResult) {
-        Screen mComponent = mapFragment.get(nameMVP);
+    public void startScreen(Screen mComponent, boolean startFlag, Object object, int forResult) {
+//        Screen mComponent = mapFragment.get(nameMVP);
+        String nameMVP = mComponent.nameComponent;
         if (mComponent == null || mComponent.typeView == null) {
             log("Нет Screens с именем " + nameMVP);
             return;
@@ -878,13 +887,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
 
     public String setFormatParam(String[] args) {
         String st = "";
-        List<Param> paramValues = ComponGlob.getInstance().paramValues;
-//        List<String> namesParams = ComponGlob.getInstance().namesParams;
-//        List<String> valuesParams = ComponGlob.getInstance().valuesParams;
+        List<Param> paramValues = componGlob.paramValues;
         String sep = "";
-//        int ik = namesParams.size();
         for (String arg : args) {
-//            String value = "";
             for (Param paramV : paramValues) {
                 if (arg.equals(paramV.name)) {
                     st = sep + paramV.value;

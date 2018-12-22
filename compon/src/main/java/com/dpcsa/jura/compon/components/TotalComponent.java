@@ -30,7 +30,7 @@ public class TotalComponent extends BaseComponent {
             totalView = parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (totalView == null) {
-            iBase.log("Не найден TotalView в " + paramMV.nameParentComponent);
+            iBase.log("Не найден TotalView в " + multiComponent.nameComponent);
             return;
         }
         record = new Record();
@@ -39,7 +39,7 @@ public class TotalComponent extends BaseComponent {
         if (listData != null) {
            total();
         } else {
-            iBase.log("Нет данных для TotalView в " + paramMV.nameParentComponent);
+            iBase.log("Нет данных для TotalView в " + multiComponent.nameComponent);
         }
         if (paramMV.paramView.visibilityArray != null) {
             for (Visibility vis : paramMV.paramView.visibilityArray) {

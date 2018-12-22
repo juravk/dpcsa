@@ -3,13 +3,10 @@ package com.dpcsa.jura.compon.custom_components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.dpcsa.jura.compon.R;
 import com.dpcsa.jura.compon.interfaces_classes.IComponent;
 import com.dpcsa.jura.compon.interfaces_classes.OnChangeStatusListener;
-import com.dpcsa.jura.compon.tools.StaticVM;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;

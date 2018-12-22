@@ -22,7 +22,7 @@ public class EditPhoneComponent extends BaseComponent {
     public void initView() {
         editPhone = (EditPhone) parentLayout.findViewById(paramMV.paramView.viewId);
         if (editPhone == null) {
-            iBase.log( "Не найден EditPhone в " + paramMV.nameParentComponent);
+            iBase.log( "Не найден EditPhone в " + multiComponent.nameComponent);
             return;
         }
         editPhone.setOnChangeStatusListener(statusListener);

@@ -3,6 +3,7 @@ package com.dpcsa.jura.compon.interfaces_classes;
 import android.os.Bundle;
 import android.view.View;
 
+import com.dpcsa.jura.compon.base.Screen;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.dpcsa.jura.compon.base.BaseActivity;
@@ -23,10 +24,10 @@ public interface IBase {
     void sendActualEvent(int sender, Object paramEvent);
     ParentModel getParentModel(String name);
     Field getProfile();
-    void startScreen(String nameMVP, boolean startFlag, Object object, int forResult);
-    void startScreen(String nameMVP, boolean startFlag, Object object);
-    void startScreen(String nameMVP, boolean startFlag);
-    void startDrawerFragment(String nameMVP, int containerFragmentId);
+    void startScreen(Screen screen, boolean startFlag, Object object, int forResult);
+    void startScreen(Screen screen, boolean startFlag, Object object);
+    void startScreen(Screen screen, boolean startFlag);
+    void startDrawerFragment(Screen screen, int containerFragmentId);
     void backPressed();
     void progressStart();
     void progressStop();

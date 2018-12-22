@@ -2,29 +2,21 @@ package com.dpcsa.jura.compon.dialogs;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.util.Log;
 import android.view.View;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.IErrorDialog;
-import com.dpcsa.jura.compon.json_simple.Field;
-import com.dpcsa.jura.compon.json_simple.JsonSimple;
-import com.dpcsa.jura.compon.json_simple.Record;
-
-import static com.dpcsa.jura.compon.base.BaseInternetProvider.AUTHFAILURE;
-import static com.dpcsa.jura.compon.base.BaseInternetProvider.ERRORINMESSAGE;
-import static com.dpcsa.jura.compon.base.BaseInternetProvider.NOCONNECTIONERROR;
-import static com.dpcsa.jura.compon.base.BaseInternetProvider.SERVERERROR;
-import static com.dpcsa.jura.compon.base.BaseInternetProvider.TIMEOUT;
+import com.dpcsa.jura.compon.single.Injector;
 
 public class DialogTools {
 
     public static void  showDialog(Activity activity, String title, String msg,
                                    View.OnClickListener clickPositive) {
-        if (ComponGlob.getInstance().appParams.classErrorDialog != null) {
+        ComponGlob componGlob = Injector.getComponGlob();
+        if (componGlob.appParams.classErrorDialog != null) {
             DialogFragment errorDialog = null;
             try {
-                errorDialog = (DialogFragment) ComponGlob.getInstance().appParams.classErrorDialog.newInstance();
+                errorDialog = (DialogFragment) componGlob.appParams.classErrorDialog.newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -41,10 +33,11 @@ public class DialogTools {
 
     public static void  showDialog(Activity activity, int statusCode, String msg,
                                    View.OnClickListener clickPositive) {
-        if (ComponGlob.getInstance().appParams.classErrorDialog != null) {
+        ComponGlob componGlob = Injector.getComponGlob();
+        if (componGlob.appParams.classErrorDialog != null) {
             DialogFragment errorDialog = null;
             try {
-                errorDialog = (DialogFragment) ComponGlob.getInstance().appParams.classErrorDialog.newInstance();
+                errorDialog = (DialogFragment) componGlob.appParams.classErrorDialog.newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

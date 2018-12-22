@@ -3,7 +3,7 @@ package com.dpcsa.jura.compon.components;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseActivity;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.base.BaseProvider;
@@ -16,8 +16,7 @@ import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamComponent;
 import com.dpcsa.jura.compon.presenter.ListPresenter;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
-import com.dpcsa.jura.compon.tools.StaticVM;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 
 public class MenuComponent extends BaseComponent {
     RecyclerView recycler;
@@ -33,12 +32,12 @@ public class MenuComponent extends BaseComponent {
     @Override
     public void initView() {
         if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            recycler = (RecyclerView) StaticVM.findViewByName(parentLayout, "recycler");
+            recycler = (RecyclerView) componGlob.findViewByName(parentLayout, "recycler");
         } else {
             recycler = (RecyclerView) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (recycler == null) {
-            iBase.log("Не найден RecyclerView для Menu в " + paramMV.nameParentComponent);
+            iBase.log("Не найден RecyclerView для Menu в " + multiComponent.nameComponent);
         }
         if (navigator != null) {
             for (ViewHandler vh : navigator.viewHandlers) {
@@ -48,7 +47,7 @@ public class MenuComponent extends BaseComponent {
                 }
             }
         } else {
-            iBase.log("Нет навигатора для Menu в " + paramMV.nameParentComponent);
+            iBase.log("Нет навигатора для Menu в " + multiComponent.nameComponent);
         }
         paramMV.paramView.fieldType = fieldType;
 //        ComponPrefTool.setNameInt(componentTag + multiComponent.nameComponent, -1);
@@ -66,7 +65,7 @@ public class MenuComponent extends BaseComponent {
         listData.clear();
         listData.addAll((ListRecords) field.value);
         provider.setData(listData);
-        int selectStart = ComponPrefTool.getNameInt(componentTag + multiComponent.nameComponent, -1);
+        int selectStart = preferences.getNameInt(componentTag + multiComponent.nameComponent, -1);
         int ik = listData.size();
         if (selectStart == -1) {
             for (int i = 0; i < ik; i++) {
@@ -98,13 +97,13 @@ public class MenuComponent extends BaseComponent {
     public void changeDataPosition(int position, boolean select) {
         adapter.notifyItemChanged(position);
         ((BaseActivity) activity).closeDrawer();
-        ComponPrefTool.setNameInt(componentTag + multiComponent.nameComponent, position);
+        preferences.setNameInt(componentTag + multiComponent.nameComponent, position);
         if (select && selectViewHandler != null) {
             Record record = listData.get(position);
-            ComponGlob.getInstance().setParam(record);
-            String st = record.getString(selectViewHandler.nameFragment);
-            if (st != null && st.length() > 0) {
-                iBase.startScreen(st, true);
+            componGlob.setParam(record);
+            Screen screen = (Screen) record.getField(selectViewHandler.nameFieldScreen).value;
+            if (screen != null) {
+                iBase.startScreen(screen, true);
             }
         }
     }

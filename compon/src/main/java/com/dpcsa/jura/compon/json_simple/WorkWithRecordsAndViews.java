@@ -1,25 +1,23 @@
 package com.dpcsa.jura.compon.json_simple;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.custom_components.PlusMinus;
 import com.dpcsa.jura.compon.custom_components.SimpleImageView;
 import com.dpcsa.jura.compon.custom_components.SimpleTextView;
-import com.dpcsa.jura.compon.custom_components.SwipeLayout;
 import com.dpcsa.jura.compon.interfaces_classes.IComponent;
 import com.dpcsa.jura.compon.interfaces_classes.Navigator;
 import com.dpcsa.jura.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.jura.compon.interfaces_classes.Visibility;
+import com.dpcsa.jura.compon.single.Injector;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -240,7 +238,7 @@ public class WorkWithRecordsAndViews {
                 } else {
                     if (st.contains("/")) {
                         if (!st.contains("http")) {
-                            st = ComponGlob.getInstance().appParams.baseUrl + st;
+                            st = Injector.getComponGlob().appParams.baseUrl + st;
                         }
                         Glide.with(view.getContext())
                                 .load(st)

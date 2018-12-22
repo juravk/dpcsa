@@ -5,16 +5,17 @@ import android.support.multidex.MultiDexApplication;
 
 import com.dpcsa.jura.dpcsa.data.db.SQL;
 import com.dpcsa.jura.dpcsa.params.CronAppParams;
-import com.dpcsa.jura.dpcsa.params.CronListScreens;
+import com.dpcsa.jura.dpcsa.params.CronDeclareScreens;
 import com.dpcsa.jura.dpcsa.tools.PreferenceTool;
 
-import com.dpcsa.jura.compon.base.SetSettings;
+import com.dpcsa.jura.compon.single.DeclareParam;
 import com.dpcsa.jura.compon.db.DatabaseManager;
 import com.dpcsa.jura.compon.interfaces_classes.ParamDB;
 
 public class CronApp extends MultiDexApplication {
     private static CronApp instance;
     private Context context;
+    private CronDeclareScreens cronDeclareScreens;
 
     public static CronApp getInstance() {
         if (instance == null) {
@@ -29,9 +30,6 @@ public class CronApp extends MultiDexApplication {
         instance = this;
         context = getApplicationContext();
         PreferenceTool.setContext(context);
-//
-        SetSettings.setNetworkParams(new CronAppParams());
-        SetSettings.setListScreens(new CronListScreens(context));
 
         ParamDB paramDB = new ParamDB();
         paramDB.nameDB = SQL.DB_NAME;
@@ -49,7 +47,13 @@ public class CronApp extends MultiDexApplication {
         paramDB.addTable(SQL.PROPERTY_TAB, SQL.PROPERTY_FIELDS, SQL.PROPERTY_INDEX_NAME, SQL.PROPERTY_INDEX_COLUMN);
         paramDB.addTable(SQL.ANALOG_TAB, SQL.ANALOG_FIELDS, SQL.ANALOG_INDEX_NAME, SQL.ANALOG_INDEX_COLUMN);
         paramDB.addTable(SQL.PRODUCT_ORDER, SQL.PRODUCT_ORDER_FIELDS, SQL.PRODUCT_ORDER_INDEX_NAME, SQL.PRODUCT_ORDER_INDEX_COLUMN);
-        SetSettings.setDB(new DatabaseManager(context, paramDB));
 
+        DeclareParam declareParam = DeclareParam.build(context)
+                .setNetworkParams(new CronAppParams())
+                .setDB(new DatabaseManager(context, paramDB));
+        cronDeclareScreens = new CronDeclareScreens();
+        declareParam.setListScreens(cronDeclareScreens);
     }
+
+    public CronDeclareScreens getCronDeclareScreens() {return cronDeclareScreens;}
 }

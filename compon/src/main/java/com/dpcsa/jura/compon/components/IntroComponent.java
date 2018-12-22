@@ -17,7 +17,8 @@ import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.jura.compon.param.ParamComponent;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
+import com.dpcsa.jura.compon.single.Injector;
 
 public class IntroComponent extends BaseComponent {
     ViewPager pager;
@@ -26,17 +27,19 @@ public class IntroComponent extends BaseComponent {
     private View furtherSkip, furtherNext, furtherStart;
     int count, count_1;
     private LayoutInflater inflater;
+    private ComponPrefTool preferences;
 //    private WorkWithRecordsAndViews modelToFurther = new WorkWithRecordsAndViews();
 
     public IntroComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
+        preferences = Injector.getPreferences();
     }
 
     @Override
     public void initView() {
         pager = (ViewPager) parentLayout.findViewById(paramMV.paramView.viewId);
         if (pager == null) {
-            iBase.log("Не найден ViewPager в " + paramMV.nameParentComponent);
+            iBase.log("Не найден ViewPager в " + multiComponent.nameComponent);
         }
         listData = new ListRecords();
     }
@@ -163,8 +166,8 @@ public class IntroComponent extends BaseComponent {
         public void onClick(View v) {
             if (navigator != null && navigator.viewHandlers.size() > 0) {
                 ViewHandler vh = navigator.viewHandlers.get(0);
-                ComponPrefTool.setTutorial(true);
-                iBase.startScreen(vh.nameFragment, false);
+                preferences.setTutorial(true);
+                iBase.startScreen(vh.screen, false);
                 iBase.backPressed();
             }
         }

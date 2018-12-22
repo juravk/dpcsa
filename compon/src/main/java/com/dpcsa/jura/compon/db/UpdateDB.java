@@ -1,17 +1,18 @@
 package com.dpcsa.jura.compon.db;
 // Підтримує роботу зі зберіганням дат оновленння баз даних
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 
 public class UpdateDB {
+    private ComponPrefTool preferences;
     Map<String, Long> mapUpdateTab;
 
-    public UpdateDB() {
-        String st = ComponPrefTool.getUpdateDBDate().replace("{","").replace("}","");
+    public UpdateDB(ComponPrefTool preferences) {
+        this.preferences = preferences;
+        String st = preferences.getUpdateDBDate().replace("{","").replace("}","");
         if (st.length() > 0) {
             mapUpdateTab = new HashMap<>();
             String[] r = st.split(",");
@@ -29,7 +30,7 @@ public class UpdateDB {
 
     public void add(String table, long date) {
         mapUpdateTab.put(table, date);
-        ComponPrefTool.setUpdateDBDate(mapUpdateTab.toString());
+        preferences.setUpdateDBDate(mapUpdateTab.toString());
     }
 
     public long getDate(String table) {

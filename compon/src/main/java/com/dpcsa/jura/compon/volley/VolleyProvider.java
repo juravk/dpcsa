@@ -5,9 +5,10 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.dpcsa.jura.compon.single.Injector;
 import com.squareup.okhttp.OkHttpClient;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 
 public class VolleyProvider {
     private static VolleyProvider instance;
@@ -15,7 +16,7 @@ public class VolleyProvider {
     private RequestQueue requestQueue;
 
     private VolleyProvider() {
-        context = ComponGlob.getInstance().context;
+        context = Injector.getComponGlob().context;
     }
 
     public static synchronized VolleyProvider getInstance() {

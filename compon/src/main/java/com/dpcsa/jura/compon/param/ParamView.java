@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.interfaces_classes.Visibility;
 
 public class ParamView {
@@ -20,7 +21,7 @@ public class ParamView {
     public int arrayLabelId;
     public int splashScreenViewId;
     public ParamModel paramModel;
-    public String[] nameFragment;
+    public Screen[] screens;
     public String[] nameFields;
     public int furtherSkip, furtherNext, furtherStart;
     public Visibility[] visibilityArray;
@@ -58,10 +59,10 @@ public class ParamView {
         tabId = style;
         paramModel = null;
         arrayLabelId = 0;
-        nameFragment = null;
+        screens = null;
     }
 
-    public ParamView(int viewId, String[] nameFragment) {
+    public ParamView(int viewId, Screen[] screens) {
         this.viewId = viewId;
         this.fieldType = "";
         this.layoutTypeId = null;
@@ -71,10 +72,10 @@ public class ParamView {
         tabId = 0;
         paramModel = null;
         arrayLabelId = 0;
-        this.nameFragment = nameFragment;
+        this.screens = screens;
     }
 
-    public ParamView(int viewId, String[] nameFragment, int[] containerId) {
+    public ParamView(int viewId, Screen[] screens, int[] containerId) {
         this.viewId = viewId;
         this.fieldType = "";
         this.layoutTypeId = containerId;
@@ -84,7 +85,7 @@ public class ParamView {
         tabId = 0;
         paramModel = null;
         arrayLabelId = 0;
-        this.nameFragment = nameFragment;
+        this.screens = screens;
     }
 
     public ParamView(int viewId, String fieldType, int[] layoutTypeId, int[] layoutFurtherTypeId) {
@@ -97,7 +98,7 @@ public class ParamView {
         tabId = 0;
         paramModel = null;
         arrayLabelId = 0;
-        nameFragment = null;
+        screens = null;
     }
 
     public ParamView setIndicator(int indicatorId) {

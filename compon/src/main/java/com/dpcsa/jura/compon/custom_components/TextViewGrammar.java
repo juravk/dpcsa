@@ -3,12 +3,11 @@ package com.dpcsa.jura.compon.custom_components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.dpcsa.jura.compon.R;
 import com.dpcsa.jura.compon.interfaces_classes.IComponent;
 import com.dpcsa.jura.compon.interfaces_classes.OnChangeStatusListener;
-import com.dpcsa.jura.compon.tools.StaticVM;
+import com.dpcsa.jura.compon.single.Injector;
 
 public class TextViewGrammar extends android.support.v7.widget.AppCompatTextView
         implements IComponent {
@@ -57,7 +56,7 @@ public class TextViewGrammar extends android.support.v7.widget.AppCompatTextView
             } else {
                 return;
             }
-            String st = StaticVM.TextForNumbet(num, textArray[0],
+            String st = Injector.getComponGlob().TextForNumbet(num, textArray[0],
                     textArray[1], textArray[2]);
             setText(st);
         }

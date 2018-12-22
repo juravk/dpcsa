@@ -20,16 +20,16 @@ public class DrawerComponent extends BaseComponent{
     public void initView() {
         drawer = (DrawerLayout)parentLayout.findViewById(paramMV.paramView.viewId);
         if (drawer == null) {
-            iBase.log( "Не найден DrawerLayout в " + paramMV.nameParentComponent);
+            iBase.log( "Не найден DrawerLayout в " + multiComponent.nameComponent);
             return;
         }
         activity.drawer = drawer;
         iBase.setFragmentsContainerId(paramMV.paramView.layoutTypeId[0]);
-        String st = paramMV.paramView.nameFragment[0];
-        if (st != null && st.length() > 0) {
-            iBase.startScreen(st, true);
+        Screen screen = paramMV.paramView.screens[0];
+        if (screen != null) {
+            iBase.startScreen(screen, true);
         }
-        iBase.startDrawerFragment(paramMV.paramView.nameFragment[1], paramMV.paramView.layoutTypeId[1]);
+        iBase.startDrawerFragment(paramMV.paramView.screens[1], paramMV.paramView.layoutTypeId[1]);
     }
 
     @Override

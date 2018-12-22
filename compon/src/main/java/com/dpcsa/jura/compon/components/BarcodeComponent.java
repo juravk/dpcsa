@@ -39,7 +39,7 @@ public class BarcodeComponent extends ButtonComponent {
         }
 //        Log.d("QWERT","BarcodeComponent scanner="+scanner);
         if (scanner == null) {
-            iBase.log("Не найден BarcodeScanner в " + paramMV.nameParentComponent);
+            iBase.log("Не найден BarcodeScanner в " + multiComponent.nameComponent);
             return;
         }
         if (paramMV.paramView.layoutTypeId != null) {
@@ -93,7 +93,7 @@ public class BarcodeComponent extends ButtonComponent {
                 scanner.setResultHandler(null);
                 scanner.stopCamera();
             }
-            scanner = null;
+//            scanner = null;
         }
     };
 

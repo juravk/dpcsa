@@ -17,8 +17,7 @@ import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.jura.compon.param.ParamComponent;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
-import com.dpcsa.jura.compon.tools.StaticVM;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 
 public class PagerVComponent extends BaseComponent {
     ViewPager pager;
@@ -36,12 +35,12 @@ public class PagerVComponent extends BaseComponent {
     @Override
     public void initView() {
         if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            pager = (ViewPager) StaticVM.findViewByName(parentLayout, "pager");
+            pager = (ViewPager) componGlob.findViewByName(parentLayout, "pager");
         } else {
             pager = (ViewPager) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (pager == null) {
-            iBase.log("Не найден ViewPager в " + paramMV.nameParentComponent);
+            iBase.log("Не найден ViewPager в " + multiComponent.nameComponent);
         }
         listData = new ListRecords();
     }
@@ -136,15 +135,15 @@ public class PagerVComponent extends BaseComponent {
                     if (vh.viewId == id) {
                         switch (vh.type) {
                             case NAME_FRAGMENT:
-                                iBase.startScreen(vh.nameFragment, false);
+                                iBase.startScreen(vh.screen, false);
                                 break;
                             case PREFERENCE_SET_VALUE:
                                 switch (vh.typePref) {
                                     case STRING:
-                                        ComponPrefTool.setNameString(vh.namePreference, vh.pref_value_string);
+                                        preferences.setNameString(vh.namePreference, vh.pref_value_string);
                                         break;
                                     case BOOLEAN:
-                                        ComponPrefTool.setNameBoolean(vh.namePreference, vh.pref_value_boolean);
+                                        preferences.setNameBoolean(vh.namePreference, vh.pref_value_boolean);
                                         break;
                                 }
                                 break;

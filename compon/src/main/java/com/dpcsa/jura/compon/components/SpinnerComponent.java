@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.adapters.SpinnerAdapter;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.base.BaseProvider;
@@ -33,7 +33,7 @@ public class SpinnerComponent extends BaseComponent {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Record record = listData.get(position);
-                ComponGlob.getInstance().setParam(record);
+                componGlob.setParam(record);
                 iBase.sendEvent(paramMV.paramView.viewId);
             }
 

@@ -4,9 +4,10 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseInternetProvider;
 import com.dpcsa.jura.compon.interfaces_classes.IVolleyListener;
+import com.dpcsa.jura.compon.single.Injector;
 import com.dpcsa.jura.compon.volley.VolleyProvider;
 import com.dpcsa.jura.compon.volley.VolleyRequest;
 
@@ -60,7 +61,7 @@ public class VolleyInternetProvider extends BaseInternetProvider {
             if (error.networkResponse != null) {
                 status = error.networkResponse.statusCode;
             }
-            Log.d(ComponGlob.getInstance().appParams.NAME_LOG_NET,"VolleyInternetProvider error.toString()="+error.toString()+"< status="
+            Log.d(Injector.getComponGlob().appParams.NAME_LOG_NET,"VolleyInternetProvider error.toString()="+error.toString()+"< status="
                     + status
                     +"< mes="+error.getMessage()+"< URL="+url
 //                    +"< DDD="+error.networkResponse.data

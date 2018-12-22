@@ -6,7 +6,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.interfaces_classes.IBase;
@@ -37,14 +37,14 @@ public class SearchComponent extends BaseComponent {
         if (viewSearch instanceof EditText){
             ((EditText) viewSearch).addTextChangedListener(new Watcher());
         } else {
-            iBase.log("View для поиска должно быть IComponent или EditText в " + paramMV.nameParentComponent);
+            iBase.log("View для поиска должно быть IComponent или EditText в " + multiComponent.nameComponent);
             return;
         }
         if (paramMV.paramView != null || paramMV.paramView.viewId != 0) {
             recycler = (RecyclerComponent) multiComponent.getComponent(paramMV.paramView.viewId);
         }
         if (recycler == null) {
-            iBase.log("Не найден RecyclerView в " + paramMV.nameParentComponent);
+            iBase.log("Не найден RecyclerView в " + multiComponent.nameComponent);
             return;
         }
         modelNew = new ParamModel(paramMV.paramModel.method);
@@ -126,7 +126,7 @@ public class SearchComponent extends BaseComponent {
             public void run() {
                 String stringParam = " ";
                 if (modelNew.method == ParamModel.GET) {
-                    ComponGlob.getInstance().addParamValue(nameParam, searchString);
+                    componGlob.addParamValue(nameParam, searchString);
                     actual();
                 } else if (modelNew.method == ParamModel.GET_DB) {
                     if (paramArray != null) {

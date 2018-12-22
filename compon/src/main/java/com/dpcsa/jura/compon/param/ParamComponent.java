@@ -1,6 +1,7 @@
 package com.dpcsa.jura.compon.param;
 
 import com.dpcsa.jura.compon.base.BaseComponent;
+import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.interfaces_classes.MoreWork;
 import com.dpcsa.jura.compon.interfaces_classes.Multiply;
 import com.dpcsa.jura.compon.interfaces_classes.Navigator;
@@ -13,11 +14,11 @@ public class ParamComponent <T>{
     public ParamComponent () {
         additionalWork = null;
     }
-    public String nameParentComponent;
+//    public String nameParentComponent;
     public String name;
     public TC type;
     public int fragmentsContainerId;
-    public String nameStartFragment;
+    public Screen startScreen;
     public int eventComponent;
     public MoreWork moreWork;
     public BaseComponent baseComponent;
@@ -25,7 +26,7 @@ public class ParamComponent <T>{
     public ParamView paramView;
     public ParamMap paramMap;
     public Navigator navigator;
-    public String intro, auth, main;
+    public Screen intro, auth, main;
     public Class<T> additionalWork;
     public int[] mustValid;
     public int viewSearchId;

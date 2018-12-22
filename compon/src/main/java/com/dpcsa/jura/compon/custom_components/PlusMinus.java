@@ -7,11 +7,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.R;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.components.PlusMinusComponent;
@@ -24,6 +23,7 @@ import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamComponent;
 import com.dpcsa.jura.compon.param.ParamModel;
+import com.dpcsa.jura.compon.single.Injector;
 
 import static com.dpcsa.jura.compon.param.ParamModel.UPDATE_DB;
 
@@ -237,7 +237,7 @@ public class PlusMinus extends AppCompatEditText {
                         if (pm.method == UPDATE_DB) {
                             ContentValues cv = new ContentValues();
                             cv.put(pm.updateSet, count);
-                            ComponGlob.getInstance().baseDB.updateRecord(iBase, pm, cv, plusMinusComponent.setParam(pm.param, record));
+                            Injector.getBaseDB().updateRecord(iBase, pm, cv, plusMinusComponent.setParam(pm.param, record));
                         }
                         break;
                 }

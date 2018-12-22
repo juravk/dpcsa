@@ -28,7 +28,7 @@ public class PopUpComponent extends BaseComponent {
     public void initView() {
         view = parentLayout.findViewById(paramMV.paramView.viewId);
         if (view == null) {
-            iBase.log( "Не найден View в PopUpComponent " + paramMV.nameParentComponent);
+            iBase.log( "Не найден View в PopUpComponent " + multiComponent.nameComponent);
             return;
         }
         listData = new ListRecords();

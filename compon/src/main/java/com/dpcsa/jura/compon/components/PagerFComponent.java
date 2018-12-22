@@ -17,7 +17,6 @@ import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.jura.compon.param.ParamComponent;
-import com.dpcsa.jura.compon.tools.StaticVM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +40,16 @@ public class PagerFComponent extends BaseComponent {
     @Override
     public void initView() {
         if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            pager = (ViewPager) StaticVM.findViewByName(parentLayout, "pager");
+            pager = (ViewPager) componGlob.findViewByName(parentLayout, "pager");
         } else {
             pager = (ViewPager) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (pager == null) {
-            iBase.log("Не найден ViewPager в " + paramMV.nameParentComponent);
+            iBase.log("Не найден ViewPager в " + multiComponent.nameComponent);
         }
         listData = new ListRecords();
         tabTitle = new ArrayList<>();
-        count = paramMV.paramView.nameFragment.length;
+        count = paramMV.paramView.screens.length;
     }
 
     @Override
@@ -94,7 +93,8 @@ public class PagerFComponent extends BaseComponent {
 
         @Override
         public Fragment getItem(int position) {
-            Screen model = iBase.getBaseActivity().mapFragment.get(paramMV.paramView.nameFragment[position]);
+//            Screen model = iBase.getBaseActivity().mapFragment.get(paramMV.paramView.nameFragment[position]);
+            Screen model = paramMV.paramView.screens[position];
             BaseFragment fragment = new BaseFragment();
             fragment.setModel((Screen) model);
             return fragment;

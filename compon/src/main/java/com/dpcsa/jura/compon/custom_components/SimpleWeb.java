@@ -2,15 +2,18 @@ package com.dpcsa.jura.compon.custom_components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.IComponent;
 import com.dpcsa.jura.compon.interfaces_classes.OnChangeStatusListener;
+import com.dpcsa.jura.compon.single.Injector;
 
 public class SimpleWeb extends WebView implements IComponent {
+
+    public ComponGlob componGlob;
+
     public SimpleWeb(Context context) {
         this(context, null);
     }
@@ -25,7 +28,7 @@ public class SimpleWeb extends WebView implements IComponent {
     }
 
     private void init(AttributeSet attrs) {
-
+        componGlob = Injector.getComponGlob();
     }
 
     @Override
@@ -33,7 +36,7 @@ public class SimpleWeb extends WebView implements IComponent {
         String detail = (String) data;
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
-        loadDataWithBaseURL(ComponGlob.getInstance().appParams.baseUrl, detail,
+        loadDataWithBaseURL(componGlob.appParams.baseUrl, detail,
                 "text/html", "utf-8", null);
     }
 

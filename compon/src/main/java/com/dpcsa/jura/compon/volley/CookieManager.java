@@ -1,6 +1,7 @@
 package com.dpcsa.jura.compon.volley;
 
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
+import com.dpcsa.jura.compon.single.Injector;
 
 import java.util.Map;
 
@@ -24,13 +25,13 @@ public class CookieManager {
                         break;
                     }
                 }
-                ComponPrefTool.setSessionToken(cookies);
+                Injector.getPreferences().setSessionToken(cookies);
             }
         }
     }
 
     public static final void checkAndAddSessionCookie(Map<String, String> headers) {
-        String cookie = ComponPrefTool.getSessionToken();
+        String cookie = Injector.getPreferences().getSessionToken();
         if (cookie != null && cookie.length() > 0) {
             StringBuilder builder = new StringBuilder();
             builder.append(SESSION_COOKIE);

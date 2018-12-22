@@ -13,7 +13,7 @@ public class PanelComponent extends BaseComponent {
     public void initView() {
         viewComponent = parentLayout.findViewById(paramMV.paramView.viewId);
         if (viewComponent == null) {
-            iBase.log("Не найдена панель в " + paramMV.nameParentComponent);
+            iBase.log("Не найдена панель в " + multiComponent.nameComponent);
         }
     }
 
@@ -32,10 +32,10 @@ public class PanelComponent extends BaseComponent {
                     workWithRecordsAndViews.RecordToView(recordComponent, viewComponent, this, clickView);
 //                    workWithRecordsAndViews.RecordToView(recordComponent, viewComponent, paramMV.navigator, clickView, paramMV.paramView.visibilityArray);
                 } else {
-                    iBase.log("Тип данных не Record в " + paramMV.nameParentComponent);
+                    iBase.log("Тип данных не Record в " + multiComponent.nameComponent);
                 }
             } else {
-                iBase.log("Тип данных не Record в " + paramMV.nameParentComponent);
+                iBase.log("Тип данных не Record в " + multiComponent.nameComponent);
             }
         }
     }

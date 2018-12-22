@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
+import com.dpcsa.jura.compon.single.Injector;
 import com.dpcsa.jura.compon.tools.Constants;
 
 import java.lang.reflect.Field;
@@ -53,7 +54,7 @@ public class ModelClassToView {
                     if (st != null) {
                         if (st.contains("/")) {
                             if (!st.contains("http")) {
-                                st = ComponGlob.getInstance().appParams.baseUrl + st;
+                                st = Injector.getComponGlob().appParams.baseUrl + st;
                             }
                             Glide.with(view.getContext())
                                     .load(st)

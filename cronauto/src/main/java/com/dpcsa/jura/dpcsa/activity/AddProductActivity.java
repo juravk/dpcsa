@@ -3,11 +3,11 @@ package com.dpcsa.jura.dpcsa.activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dpcsa.jura.compon.single.Injector;
 import com.dpcsa.jura.dpcsa.R;
 import com.dpcsa.jura.dpcsa.data.db.SQL;
 
@@ -18,7 +18,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseActivity;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.components.PlusMinusComponent;
@@ -130,7 +130,7 @@ public class AddProductActivity extends BaseActivity implements ICustom{
         cv.put("comment", "");
         cv.put("payBonus", 0);
         cv.put("date", d);
-        ComponGlob.getInstance().baseDB.insertCV(SQL.ORDER_TAB, cv);
+        Injector.getBaseDB().insertCV(SQL.ORDER_TAB, cv);
     }
 
     public String createOrderId() {

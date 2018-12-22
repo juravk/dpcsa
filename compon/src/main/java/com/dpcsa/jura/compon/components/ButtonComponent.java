@@ -22,7 +22,7 @@ public class ButtonComponent extends BaseComponent{
     public void initView() {
         buttonView = (View) parentLayout.findViewById(paramMV.paramView.viewId);
         if (buttonView == null) {
-            iBase.log( "Не найден Button(View) в " + paramMV.nameParentComponent);
+            iBase.log( "Не найден Button(View) в " + multiComponent.nameComponent);
             return;
         }
         buttonView.setOnClickListener(clickListener);

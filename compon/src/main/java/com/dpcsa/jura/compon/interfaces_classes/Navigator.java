@@ -1,5 +1,6 @@
 package com.dpcsa.jura.compon.interfaces_classes;
 
+import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.param.ParamModel;
 
 import java.util.ArrayList;
@@ -13,18 +14,18 @@ public class Navigator {
         return this;
     }
 
-    public Navigator add(int viewId, String nameFragment) {
-        viewHandlers.add(new ViewHandler(viewId, nameFragment));
+    public Navigator add(int viewId, Screen screen) {
+        viewHandlers.add(new ViewHandler(viewId, screen));
         return this;
     }
 
-    public Navigator add(int viewId, String nameFragment, ActionsAfterResponse afterResponse) {
-        viewHandlers.add(new ViewHandler(viewId, nameFragment, afterResponse));
+    public Navigator add(int viewId, Screen screen, ActionsAfterResponse afterResponse) {
+        viewHandlers.add(new ViewHandler(viewId, screen, afterResponse));
         return this;
     }
 
-    public Navigator add(int viewId, String nameFragment, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
-        viewHandlers.add(new ViewHandler(viewId, nameFragment, paramForScreen));
+    public Navigator add(int viewId, Screen screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
+        viewHandlers.add(new ViewHandler(viewId, screen, paramForScreen));
         return this;
     }
 
@@ -43,14 +44,14 @@ public class Navigator {
         return this;
     }
 
-    public Navigator add(int viewId, ViewHandler.TYPE type, ParamModel paramModel, String nameScreen) {
-        viewHandlers.add(new ViewHandler(viewId, type, paramModel, nameScreen));
+    public Navigator add(int viewId, ViewHandler.TYPE type, ParamModel paramModel, Screen screen) {
+        viewHandlers.add(new ViewHandler(viewId, type, paramModel, screen));
         return this;
     }
 
     public Navigator add(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
-                         String nameScreen, boolean changeEnabled, int... mustValid) {
-        viewHandlers.add(new ViewHandler(viewId, type, paramModel, nameScreen, changeEnabled, mustValid));
+                         Screen screen, boolean changeEnabled, int... mustValid) {
+        viewHandlers.add(new ViewHandler(viewId, type, paramModel, screen, changeEnabled, mustValid));
         return this;
     }
 

@@ -14,9 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dpcsa.jura.compon.single.Injector;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.AnimatePanel;
 import com.dpcsa.jura.compon.interfaces_classes.EventComponent;
 import com.dpcsa.jura.compon.interfaces_classes.IBase;
@@ -27,9 +28,8 @@ import com.dpcsa.jura.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.JsonSimple;
 import com.dpcsa.jura.compon.json_simple.JsonSyntaxException;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 import com.dpcsa.jura.compon.tools.Constants;
-import com.dpcsa.jura.compon.tools.StaticVM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,15 +49,19 @@ public class BaseFragment extends Fragment implements IBase {
     private List<AnimatePanel> animatePanelList;
     protected BaseActivity activity;
     private String nameMvp = null;
-    public String TAG = ComponGlob.getInstance().appParams.NAME_LOG_APP;
+    public String TAG;
     public Field paramScreen;
     public List<OnResumePause> resumePauseList;
+    private ComponGlob componGlob;
+    private ComponPrefTool preferences;
 
     public BaseFragment() {
         mObject = null;
         listInternetProvider = new ArrayList<>();
         listEvent = new ArrayList<>();
         parentModelList = new ArrayList<>();
+        componGlob = Injector.getComponGlob();
+        TAG = componGlob.appParams.NAME_LOG_APP;
     }
 
     public BaseFragment getThis() {
@@ -95,7 +99,7 @@ public class BaseFragment extends Fragment implements IBase {
             parentLayout = inflater.inflate(mComponent.fragmentLayoutId, null, false);
         }
         if (mComponent != null) {
-            TextView title = (TextView) StaticVM.findViewByName(parentLayout, "title");
+            TextView title = (TextView) componGlob.findViewByName(parentLayout, "title");
             if (title != null && mComponent.title != null) {
                 if (mComponent.args != null && mComponent.args.length > 0) {
                     title.setText(String.format(mComponent.title, activity.setFormatParam(mComponent.args)));
@@ -119,9 +123,9 @@ public class BaseFragment extends Fragment implements IBase {
                     SetData sd = (SetData) mComponent.listSetData.get(i);
                     String value;
                     if (sd.source == 0) {
-                        value = ComponPrefTool.getNameString(sd.nameParam);
+                        value = preferences.getNameString(sd.nameParam);
                     } else {
-                        value = ComponGlob.getInstance().getParamValue(sd.nameParam);
+                        value = componGlob.getParamValue(sd.nameParam);
                     }
                     View v = parentLayout.findViewById(sd.viewId);
                     if (v != null) {
@@ -160,7 +164,7 @@ public class BaseFragment extends Fragment implements IBase {
     }
 
     @Override
-    public void startDrawerFragment(String nameMVP, int containerFragmentId) {
+    public void startDrawerFragment(Screen screen, int containerFragmentId) {
     }
 
     public int getLayoutId() {
@@ -193,7 +197,7 @@ public class BaseFragment extends Fragment implements IBase {
                 if (vh.viewId == id) {
                     switch (vh.type) {
                         case NAME_FRAGMENT:
-                            activity.startScreen(vh.nameFragment, false);
+                            activity.startScreen(vh.screen, false);
                             break;
                         case SHOW:
                             View showView = parentLayout.findViewById(vh.showViewId);
@@ -341,11 +345,11 @@ public class BaseFragment extends Fragment implements IBase {
 
     @Override
     public Field getProfile() {
-        return ComponGlob.getInstance().profile;
+        return componGlob.profile;
     }
 
     @Override
-    public void startScreen(String nameMVP, boolean startFlag, Object object, int forResult) {
+    public void startScreen(Screen screen, boolean startFlag, Object object, int forResult) {
 
     }
 
@@ -427,18 +431,18 @@ public class BaseFragment extends Fragment implements IBase {
     }
 
 //    @Override
-    public void startActivitySimple(String nameMVP, Object object) {
-        activity.startActivitySimple(nameMVP, object);
+//    public void startActivitySimple(String nameMVP, Object object) {
+//        activity.startActivitySimple(nameMVP, object);
+//    }
+
+    @Override
+    public void startScreen(Screen screen, boolean startFlag, Object object) {
+        activity.startScreen(screen, startFlag, object);
     }
 
     @Override
-    public void startScreen(String nameMVP, boolean startFlag, Object object) {
-        activity.startScreen(nameMVP, startFlag, object);
-    }
-
-    @Override
-    public void startScreen(String nameMVP, boolean startFlag) {
-        activity.startScreen(nameMVP, startFlag, -1);
+    public void startScreen(Screen screen, boolean startFlag) {
+        activity.startScreen(screen, startFlag, -1);
     }
 //    @Override
     public void startFragment(String nameMVP, boolean startFlag,Object object) {
@@ -459,11 +463,11 @@ public class BaseFragment extends Fragment implements IBase {
 
     @Override
     public void progressStart() {
-        if (ComponGlob.getInstance().appParams.classProgress != null) {
+        if (componGlob.appParams.classProgress != null) {
             if (progressDialog == null) {
 //            progressDialog = new ProgressDialog();
                 try {
-                    progressDialog = (DialogFragment) ComponGlob.getInstance().appParams.classProgress.newInstance();
+                    progressDialog = (DialogFragment) componGlob.appParams.classProgress.newInstance();
                 } catch (java.lang.InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {

@@ -1,6 +1,5 @@
 package com.dpcsa.jura.compon.volley;
 
-import android.text.Html;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -12,9 +11,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.IVolleyListener;
 import com.dpcsa.jura.compon.param.AppParams;
+import com.dpcsa.jura.compon.single.Injector;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class VolleyRequest <T> extends Request<T> {
     public VolleyRequest(int method, String url, IVolleyListener listener,
                          Map<String, String> headers, byte[] data) {
         super(method, url, listener);
-        appParams = ComponGlob.getInstance().appParams;
+        appParams = Injector.getComponGlob().appParams;
         if (appParams.LOG_LEVEL > 1) Log.d(appParams.NAME_LOG_NET, "method=" + method + " url=" + url);
         this.headers = headers;
         this.listener = listener;

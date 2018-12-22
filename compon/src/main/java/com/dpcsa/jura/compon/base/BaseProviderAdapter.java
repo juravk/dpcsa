@@ -2,7 +2,6 @@ package com.dpcsa.jura.compon.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import com.dpcsa.jura.compon.ComponGlob;
-import com.dpcsa.jura.compon.R;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.custom_components.SwipeLayout;
 import com.dpcsa.jura.compon.interfaces_classes.IBase;
 import com.dpcsa.jura.compon.interfaces_classes.IPresenterListener;
@@ -25,6 +23,7 @@ import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamModel;
 import com.dpcsa.jura.compon.param.ParamView;
 import com.dpcsa.jura.compon.json_simple.WorkWithRecordsAndViews;
+import com.dpcsa.jura.compon.single.Injector;
 
 import static com.dpcsa.jura.compon.param.ParamModel.GET_DB;
 
@@ -47,10 +46,14 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     protected View[] imgLevel;
     protected int maxPositionLevel = 3;
     private int saveLevel, savePosition;
+    private ComponGlob componGlob;
+    private BaseDB baseDB;
 
     public BaseProviderAdapter(BaseComponent baseComponent) {
         context = baseComponent.activity;
         iBase = baseComponent.iBase;
+        componGlob = Injector.getComponGlob();
+        baseDB = Injector.getBaseDB();
         inflater = LayoutInflater.from(context);
         this.baseComponent = baseComponent;
         this.provider = baseComponent.provider;
@@ -74,7 +77,7 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         visibilityManager = paramView.visibilityArray;
         modelToView = new WorkWithRecordsAndViews();
-        layout = "item_recycler_" + baseComponent.paramMV.nameParentComponent;
+        layout = "item_recycler_" + baseComponent.multiComponent.nameComponent;
         positionLevel = new int[maxPositionLevel];
         imgLevel = new ImageView[maxPositionLevel];
         for (int i = 0; i < positionLevel.length; i++) {
@@ -254,7 +257,7 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             }
                             saveLevel = level;
                             savePosition = position;
-                            ComponGlob.getInstance().baseDB.get(iBase, model, param, listener);
+                            baseDB.get(iBase, model, param, listener);
                             break;
                         default: {
                             new BasePresenter(iBase, model, null, null, listener);
@@ -267,7 +270,7 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private String getGlobalParam(String name) {
         String st = null;
-        List<Param> paramV = ComponGlob.getInstance().paramValues;
+        List<Param> paramV = componGlob.paramValues;
         for (Param par : paramV) {
             if (par.name.equals(name)) {
                 st = par.value;

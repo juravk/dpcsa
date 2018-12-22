@@ -12,11 +12,12 @@ public abstract class AppParams<T> {
     public static String NAME_LOG_APP = "SMPL_APP";
     public Class<T>  classProgress;
     public Class<T>  classErrorDialog;
-    public AppParams() {
-        setParams();
-    }
     public String nameTokenInHeader = "";
     public String nameLanguageInHeader = "";
     public abstract void setParams();
     public int errorDialogViewId;
+
+    public AppParams() {
+        setParams();
+    }
 }

@@ -1,56 +1,41 @@
-package com.dpcsa.jura.compon;
+package com.dpcsa.jura.compon.single;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.dpcsa.jura.compon.base.BaseDB;
 import com.dpcsa.jura.compon.base.Screen;
-import com.dpcsa.jura.compon.db.UpdateDB;
 import com.dpcsa.jura.compon.interfaces_classes.Param;
 import com.dpcsa.jura.compon.param.AppParams;
 import com.dpcsa.jura.compon.param.ParamModel;
 import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.FieldBroadcaster;
 import com.dpcsa.jura.compon.json_simple.Record;
-import com.dpcsa.jura.compon.network.CacheWork;
 import com.dpcsa.jura.compon.tools.Constants;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ComponGlob {
-    private static ComponGlob instance;
     public FieldBroadcaster profile;
     public Context context;
-    public CacheWork cacheWork;
     public Map<String, Screen> MapScreen;
-    public UpdateDB updateDB;
     public AppParams appParams;
-    public BaseDB baseDB;
     public List<Param> paramValues = new ArrayList<>();
     public String token;
     public String language;
 
-    public static ComponGlob getInstance() {
-        if (instance == null) {
-            instance = new ComponGlob();
-        }
-        return instance;
-    }
-
-    public ComponGlob() {
-        instance = this;
+    public ComponGlob(Context context) {
+        this.context = context;
         token = "";
         language = "uk";
         MapScreen = new HashMap<String, Screen>();
         profile = new FieldBroadcaster("profile", Field.TYPE_RECORD, null);
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-        cacheWork = new CacheWork(context);
-        updateDB = new UpdateDB();
     }
 
     public void setParam(Record fields) {
@@ -200,5 +185,70 @@ public class ComponGlob {
             case SLASH: return installParamSlash(param);
             default: return "";
         }
+    }
+
+    public View findViewByName(View v, String name) {
+        View vS = null;
+        ViewGroup vg;
+        int id;
+        String nameS = "";
+        if (v instanceof ViewGroup) {
+            vg = (ViewGroup) v;
+            int countChild = vg.getChildCount();
+            id = v.getId();
+            if (id != -1) {
+                try {
+                    nameS = v.getContext().getResources().getResourceEntryName(id);
+                } catch (Resources.NotFoundException e) {
+                    nameS = "";
+                }
+                if (name.equals(nameS)) {
+                    return v;
+                }
+            }
+            for (int i = 0; i < countChild; i++) {
+                vS = findViewByName(vg.getChildAt(i), name);
+                if (vS != null) {
+                    return vS;
+                }
+            }
+        } else {
+            id = v.getId();
+            if (id != -1) {
+                nameS = v.getContext().getResources().getResourceEntryName(id);
+                if (name.equals(nameS)) return v;
+            }
+        }
+        return vS;
+    }
+
+    public Calendar stringToDate(String st) {
+        Calendar c;
+        String dd = "";
+        if (st.indexOf("T") > 0) {
+            dd = st.split("T")[0];
+        } else {
+            dd = st;
+        }
+        String[] d = dd.split("-");
+        c = new GregorianCalendar(Integer.valueOf(d[0]),
+                Integer.valueOf(d[1]) - 1,
+                Integer.valueOf(d[2]));
+        return c;
+    }
+
+    public String TextForNumbet(int num, String t1, String t2_4, String t5_9) {
+        int n1 = num % 100;
+        if (n1 < 21 && n1 > 4) {
+            return t5_9;
+        }
+        n1 = num % 10;
+        if (n1 == 1) {
+            return t1;
+        }
+        if (n1 > 1 && n1 < 5) {
+            return t2_4;
+        }
+        return t5_9;
     }
 }

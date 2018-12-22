@@ -3,6 +3,7 @@ package com.dpcsa.jura.compon.interfaces_classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.param.ParamModel;
 
 import static com.dpcsa.jura.compon.interfaces_classes.ViewHandler.TYPE;
@@ -10,8 +11,8 @@ import static com.dpcsa.jura.compon.interfaces_classes.ViewHandler.TYPE;
 public class ActionsAfterResponse {
     public List<ViewHandler> viewHandlers = new ArrayList<>();
 
-    public ActionsAfterResponse startScreen(String nameScreen) {
-        viewHandlers.add(new ViewHandler(0, nameScreen));
+    public ActionsAfterResponse startScreen(Screen screen) {
+        viewHandlers.add(new ViewHandler(0, screen));
         return this;
     }
 

@@ -5,8 +5,9 @@ import android.content.ContentValues;
 import java.util.Date;
 import java.util.Random;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseComponent;
+import com.dpcsa.jura.compon.single.Injector;
 
 public class SQL {
     public static long dayMillisecond = 24*60*60*1000;
@@ -106,7 +107,7 @@ public class SQL {
         cv.put("comment", "");
         cv.put("payBonus", 0);
         cv.put("date", d);
-        ComponGlob.getInstance().baseDB.insertCV(SQL.ORDER_TAB, cv);
+        Injector.getBaseDB().insertCV(SQL.ORDER_TAB, cv);
         component.getComponent(recyclerId).actual();
     }
 

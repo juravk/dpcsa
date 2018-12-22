@@ -43,12 +43,12 @@ public class PhotoComponent extends BaseComponent{
     public void initView() {
         view = parentLayout.findViewById(paramMV.paramView.viewId);
         if (view == null) {
-            iBase.log( "Не найден View в " + paramMV.nameParentComponent);
+            iBase.log( "Не найден View в " + multiComponent.nameComponent);
             return;
         }
         img = (ImageView) parentLayout.findViewById(paramMV.paramView.layoutTypeId[0]);
         if (img == null) {
-            iBase.log( "Не найден ImageView в " + paramMV.nameParentComponent);
+            iBase.log( "Не найден ImageView в " + multiComponent.nameComponent);
             return;
         }
         paramMV.startActual = false;

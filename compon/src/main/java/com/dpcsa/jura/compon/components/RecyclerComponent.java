@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.dpcsa.jura.compon.ComponGlob;
+import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.base.BaseProvider;
 import com.dpcsa.jura.compon.base.BaseProviderAdapter;
@@ -18,8 +18,7 @@ import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamComponent;
 import com.dpcsa.jura.compon.presenter.ListPresenter;
-import com.dpcsa.jura.compon.tools.ComponPrefTool;
-import com.dpcsa.jura.compon.tools.StaticVM;
+import com.dpcsa.jura.compon.single.ComponPrefTool;
 
 public class RecyclerComponent extends BaseComponent {
     RecyclerView recycler;
@@ -33,12 +32,12 @@ public class RecyclerComponent extends BaseComponent {
     @Override
     public void initView() {
         if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            recycler = (RecyclerView) StaticVM.findViewByName(parentLayout, "recycler");
+            recycler = (RecyclerView) componGlob.findViewByName(parentLayout, "recycler");
         } else {
             recycler = (RecyclerView) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (recycler == null) {
-            iBase.log("Не найден RecyclerView в " + paramMV.nameParentComponent);
+            iBase.log("Не найден RecyclerView в " + multiComponent.nameComponent);
             return;
         }
         listData = new ListRecords();
@@ -75,7 +74,7 @@ public class RecyclerComponent extends BaseComponent {
         listData.addAll((ListRecords) field.value);
         provider.setData(listData);
         if (listPresenter != null) {
-            int selectStart = ComponPrefTool.getNameInt(componentTag + multiComponent.nameComponent, -1);
+            int selectStart = preferences.getNameInt(componentTag + multiComponent.nameComponent, -1);
             int ik = listData.size();
             if (ik > 0) {
                 if (selectStart == -1) {
@@ -109,7 +108,7 @@ public class RecyclerComponent extends BaseComponent {
                 } else if (selectStart >= ik && ik > 0) {
                     selectStart = ik - 1;
                 }
-                ComponGlob.getInstance().setParam(listData.get(selectStart));
+                componGlob.setParam(listData.get(selectStart));
             }
             listPresenter.changeData(listData, selectStart);
         }
@@ -124,7 +123,7 @@ public class RecyclerComponent extends BaseComponent {
                     v_splash.setVisibility(View.VISIBLE);
                 }
             } else {
-                iBase.log("Не найден SplashView в " + paramMV.nameParentComponent);
+                iBase.log("Не найден SplashView в " + multiComponent.nameComponent);
             }
         }
 
@@ -152,13 +151,14 @@ public class RecyclerComponent extends BaseComponent {
         if (paramMV.paramView.selected) {
             adapter.notifyItemChanged(position);
             if (paramMV.paramView.maxItemSelect == -1) {
-                ComponPrefTool.setNameInt(componentTag + multiComponent.nameComponent, position);
+                preferences.setNameInt(componentTag + multiComponent.nameComponent, position);
                 if (select && selectViewHandler != null) {
                     Record record = listData.get(position);
-                    ComponGlob.getInstance().setParam(record);
-                    String st = record.getString(selectViewHandler.nameFragment);
-                    if (st != null && st.length() > 0) {
-                        iBase.startScreen(st, true);
+                    componGlob.setParam(record);
+//                    String st = record.getString(selectViewHandler.nameFragment);
+                    Screen screen = (Screen) record.getField(selectViewHandler.nameFieldScreen).value;
+                    if (screen != null) {
+                        iBase.startScreen(screen, true);
                     }
                 }
             }
