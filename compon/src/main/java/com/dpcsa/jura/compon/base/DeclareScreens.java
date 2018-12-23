@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dpcsa.jura.compon.interfaces_classes.DataFieldGet;
+import com.dpcsa.jura.compon.interfaces_classes.ExecMethod;
 import com.dpcsa.jura.compon.interfaces_classes.Navigator;
+import com.dpcsa.jura.compon.interfaces_classes.SendAndUpdate;
 import com.dpcsa.jura.compon.param.ParamView;
 import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.interfaces_classes.ActionsAfterResponse;
@@ -273,5 +275,83 @@ public class DeclareScreens<T>{
 
     public Navigator navigator() {
         return new Navigator();
+    }
+
+    public Navigator navigator(ViewHandler ... handlers) {
+        return new Navigator(handlers);
+    }
+
+    public ViewHandler handler(String fieldNameFragment) {
+        return new ViewHandler(fieldNameFragment);
+    }
+
+    public ViewHandler handler(int viewId, Screen screen) {
+        return new ViewHandler(viewId, screen);
+    }
+
+    public ViewHandler handler(int viewId, Screen screen, ActionsAfterResponse afterResponse) {
+        return new ViewHandler(viewId, screen, afterResponse);
+    }
+
+    public ViewHandler handler(int viewId, Screen screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
+        return new ViewHandler(viewId, screen, paramForScreen);
+    }
+
+    public ViewHandler handler(int viewId, ParamModel paramModel) {
+        return new ViewHandler(viewId, paramModel);
+    }
+
+    public ViewHandler handler(ParamModel paramModel) {
+        return new ViewHandler(0, paramModel);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel) {
+        return new ViewHandler(viewId, type, paramModel);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel, Screen screen) {
+        return new ViewHandler(viewId, type, paramModel, screen);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
+                         Screen screen, boolean changeEnabled, int... mustValid) {
+        return new ViewHandler(viewId, type, paramModel, screen, changeEnabled, mustValid);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
+                         ActionsAfterResponse afterResponse, boolean changeEnabled, int... mustValid) {
+        return new ViewHandler(viewId, type, paramModel, afterResponse, changeEnabled, mustValid);
+    }
+
+    public ViewHandler handler(int viewId, ExecMethod execMethod) {
+        return new ViewHandler(viewId, execMethod);
+    }
+
+    public ViewHandler handler(int viewId, String namePreference, boolean value) {
+        return new ViewHandler(viewId, namePreference, value);
+    }
+
+    public ViewHandler handler(int viewId, String namePreference, String value) {
+        return new ViewHandler(viewId, namePreference, value);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type) {
+        return new ViewHandler(viewId, type);
+    }
+
+    public ViewHandler handler(ViewHandler.TYPE type) {
+        return new ViewHandler(type);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, String nameFieldWithValue) {
+        return new ViewHandler(viewId, type, nameFieldWithValue);
+    }
+
+    public ViewHandler handler(int viewId, SendAndUpdate sendAndUpdate) {
+        return new ViewHandler(viewId, sendAndUpdate);
+    }
+
+    public ViewHandler handler(int viewId, int showViewId) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SHOW, showViewId);
     }
 }

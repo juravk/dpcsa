@@ -688,6 +688,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     @Override
     public void startScreen(Screen mComponent, boolean startFlag, Object object, int forResult) {
 //        Screen mComponent = mapFragment.get(nameMVP);
+        Log.d("QWERT","startScreen mComponent="+mComponent);
         String nameMVP = mComponent.nameComponent;
         if (mComponent == null || mComponent.typeView == null) {
             log("Нет Screens с именем " + nameMVP);
