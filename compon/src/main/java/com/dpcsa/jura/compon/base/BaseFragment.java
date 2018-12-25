@@ -164,7 +164,7 @@ public class BaseFragment extends Fragment implements IBase {
     }
 
     @Override
-    public void startDrawerFragment(Screen screen, int containerFragmentId) {
+    public void startDrawerFragment(String screen, int containerFragmentId) {
     }
 
     public int getLayoutId() {
@@ -349,7 +349,7 @@ public class BaseFragment extends Fragment implements IBase {
     }
 
     @Override
-    public void startScreen(Screen screen, boolean startFlag, Object object, int forResult) {
+    public void startScreen(String screen, boolean startFlag, Object object, int forResult) {
 
     }
 
@@ -436,12 +436,12 @@ public class BaseFragment extends Fragment implements IBase {
 //    }
 
     @Override
-    public void startScreen(Screen screen, boolean startFlag, Object object) {
+    public void startScreen(String screen, boolean startFlag, Object object) {
         activity.startScreen(screen, startFlag, object);
     }
 
     @Override
-    public void startScreen(Screen screen, boolean startFlag) {
+    public void startScreen(String screen, boolean startFlag) {
         activity.startScreen(screen, startFlag, -1);
     }
 //    @Override

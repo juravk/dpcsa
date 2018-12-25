@@ -32,7 +32,8 @@ public class DeclareParam {
         return this;
     }
 
-    public DeclareParam setListScreens(DeclareScreens declareScreens) {
+    public DeclareParam setDeclareScreens(DeclareScreens declareScreens) {
+
         declareScreens.initScreen();
         return this;
     }

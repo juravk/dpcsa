@@ -14,7 +14,7 @@ public class ViewHandler {
     public TYPE type;
 //    public String nameFragment;
     public String nameFieldScreen;
-    public Screen screen;
+    public String screen;
     public ParamModel paramModel;
     public SendAndUpdate sendAndUpdate;
     public enum TYPE_PREFER {BOOLEAN, STRING};
@@ -43,14 +43,14 @@ public class ViewHandler {
         this.viewId = 0;
     }
 
-    public ViewHandler(int viewId, Screen screen) {
+    public ViewHandler(int viewId, String screen) {
         type = TYPE.NAME_FRAGMENT;
         paramForScreen = TYPE_PARAM_FOR_SCREEN.NONE;
         this.viewId = viewId;
         this.screen = screen;
     }
 
-    public ViewHandler(int viewId, Screen screen, ActionsAfterResponse afterResponse) {
+    public ViewHandler(int viewId, String screen, ActionsAfterResponse afterResponse) {
         type = TYPE.NAME_FRAGMENT;
         paramForScreen = TYPE_PARAM_FOR_SCREEN.NONE;
         this.afterResponse = afterResponse;
@@ -65,14 +65,14 @@ public class ViewHandler {
         this.execMethod = execMethod;
     }
 
-    public ViewHandler(int viewId, Screen screen, TYPE_PARAM_FOR_SCREEN paramForScreen) {
+    public ViewHandler(int viewId, String screen, TYPE_PARAM_FOR_SCREEN paramForScreen) {
         type = TYPE.NAME_FRAGMENT;
         this.paramForScreen = paramForScreen;
         this.viewId = viewId;
         this.screen = screen;
     }
 
-    public ViewHandler(int viewId, Screen screen, TYPE_PARAM_FOR_SCREEN paramForScreen,
+    public ViewHandler(int viewId, String screen, TYPE_PARAM_FOR_SCREEN paramForScreen,
                        ActionsAfterResponse afterResponse) {
         type = TYPE.NAME_FRAGMENT;
         this.paramForScreen = paramForScreen;
@@ -99,7 +99,7 @@ public class ViewHandler {
         this.paramModel = paramModel;
     }
 
-    public ViewHandler(int viewId, TYPE type, ParamModel paramModel, Screen screen) {
+    public ViewHandler(int viewId, TYPE type, ParamModel paramModel, String screen) {
         this.type = type;
         this.viewId = viewId;
         this.screen = screen;
@@ -107,7 +107,7 @@ public class ViewHandler {
     }
 
     public ViewHandler(int viewId, TYPE type, ParamModel paramModel,
-                       Screen screen, boolean changeEnabled, int... mustValid) {
+                       String screen, boolean changeEnabled, int... mustValid) {
         this.type = type;
         this.viewId = viewId;
         this.screen = screen;

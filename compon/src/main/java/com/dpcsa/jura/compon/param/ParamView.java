@@ -21,7 +21,7 @@ public class ParamView {
     public int arrayLabelId;
     public int splashScreenViewId;
     public ParamModel paramModel;
-    public Screen[] screens;
+    public String [] screens;
     public String[] nameFields;
     public int furtherSkip, furtherNext, furtherStart;
     public Visibility[] visibilityArray;
@@ -62,7 +62,7 @@ public class ParamView {
         screens = null;
     }
 
-    public ParamView(int viewId, Screen[] screens) {
+    public ParamView(int viewId, String[] screens) {
         this.viewId = viewId;
         this.fieldType = "";
         this.layoutTypeId = null;
@@ -75,7 +75,7 @@ public class ParamView {
         this.screens = screens;
     }
 
-    public ParamView(int viewId, Screen[] screens, int[] containerId) {
+    public ParamView(int viewId, String[] screens, int[] containerId) {
         this.viewId = viewId;
         this.fieldType = "";
         this.layoutTypeId = containerId;

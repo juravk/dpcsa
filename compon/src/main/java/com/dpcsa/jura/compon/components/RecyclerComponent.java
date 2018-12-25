@@ -43,9 +43,8 @@ public class RecyclerComponent extends BaseComponent {
         listData = new ListRecords();
         if (paramMV.paramView.selected) {
             if (navigator == null) {
-                navigator = new Navigator();
+                navigator = new Navigator(new ViewHandler(0, ViewHandler.TYPE.SELECT));
             }
-            navigator.add(0, ViewHandler.TYPE.SELECT);
             listPresenter = new ListPresenter(this);
         }
         provider = new BaseProvider(listData);
@@ -156,8 +155,8 @@ public class RecyclerComponent extends BaseComponent {
                     Record record = listData.get(position);
                     componGlob.setParam(record);
 //                    String st = record.getString(selectViewHandler.nameFragment);
-                    Screen screen = (Screen) record.getField(selectViewHandler.nameFieldScreen).value;
-                    if (screen != null) {
+                    String screen = (String) record.getField(selectViewHandler.nameFieldScreen).value;
+                    if (screen != null && screen.length() > 0) {
                         iBase.startScreen(screen, true);
                     }
                 }

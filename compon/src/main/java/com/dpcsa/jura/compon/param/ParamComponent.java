@@ -18,7 +18,7 @@ public class ParamComponent <T>{
     public String name;
     public TC type;
     public int fragmentsContainerId;
-    public Screen startScreen;
+    public String startScreen;
     public int eventComponent;
     public MoreWork moreWork;
     public BaseComponent baseComponent;
@@ -26,7 +26,7 @@ public class ParamComponent <T>{
     public ParamView paramView;
     public ParamMap paramMap;
     public Navigator navigator;
-    public Screen intro, auth, main;
+    public String intro, auth, main;
     public Class<T> additionalWork;
     public int[] mustValid;
     public int viewSearchId;

@@ -63,32 +63,32 @@ public class Screen<T>{
             pc.baseComponent.iCustom = iCustom;
         }
     }
-    public Screen(int layoutId, String title, String... args) {
+    public Screen(String name, int layoutId, String title, String... args) {
         this.title = title;
         this.args = args;
-//        this.nameComponent = name;
+        this.nameComponent = name;
         this.fragmentLayoutId = layoutId;
         listComponents = new ArrayList<>();
     }
 
-    public Screen(int layoutId) {
+    public Screen(String name, int layoutId) {
         this.title = "";
         this.args = null;
-//        this.nameComponent = name;
+        this.nameComponent = name;
         this.fragmentLayoutId = layoutId;
         listComponents = new ArrayList<>();
     }
 
-    public Screen() {
-        this.title = "";
-        this.args = null;
+//    public Screen(String name) {
+//        this.title = "";
+//        this.args = null;
 //        this.nameComponent = name;
-        typeView = TYPE_VIEW.CUSTOM_FRAGMENT;
-        listComponents = new ArrayList<>();
-    }
+//        typeView = TYPE_VIEW.CUSTOM_FRAGMENT;
+//        listComponents = new ArrayList<>();
+//    }
 
-    public Screen(Class<T> customFragment) {
-//        this.nameComponent = name;
+    public Screen(String name, Class<T> customFragment) {
+        this.nameComponent = name;
         this.customFragment = customFragment;
         listComponents = new ArrayList<>();
     }
@@ -176,7 +176,7 @@ public class Screen<T>{
         paramComponent.paramModel = paramModel;
         paramComponent.paramView = paramView;
         paramComponent.paramView.maxItemSelect = -1;
-        paramComponent.navigator = new Navigator().add("nameFunc");
+        paramComponent.navigator = new Navigator(new ViewHandler("nameFunc"));
         listComponents.add(paramComponent);
         return this;
     }
@@ -198,7 +198,7 @@ public class Screen<T>{
         return addComponentMap(viewId, null, paramMap, null, 0);
     }
 
-    public Screen addDrawer(int viewId, int[] containerId, Screen[] screens) {
+    public Screen addDrawer(int viewId, int[] containerId, String[] screens) {
         return addComponent(ParamComponent.TC.DRAWER, new ParamView(viewId, screens, containerId));
     }
 
@@ -264,7 +264,7 @@ public class Screen<T>{
         return fragmentsContainer(fragmentsContainerId, null);
     }
 
-    public Screen fragmentsContainer(int fragmentsContainerId, Screen screen) {
+    public Screen fragmentsContainer(int fragmentsContainerId, String screen) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.CONTAINER;
         paramComponent.fragmentsContainerId = fragmentsContainerId;
@@ -273,7 +273,7 @@ public class Screen<T>{
         return this;
     }
 
-    public Screen addComponentSplash(Screen intro, Screen auth, Screen main) {
+    public Screen addComponentSplash(String intro, String auth, String main) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.SPLASH;
         paramComponent.intro = intro;

@@ -103,6 +103,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         workWithRecordsAndViews = new WorkWithRecordsAndViews();
         String paramJson = intent.getStringExtra(Constants.NAME_PARAM_FOR_SCREEN);
         if (paramJson != null && paramJson.length() >0) {
+//            Log.d("QWERT","BaseActivity paramJson="+paramJson);
             JsonSimple jsonSimple = new JsonSimple();
             try {
                 paramScreen = jsonSimple.jsonToModel(paramJson);
@@ -115,23 +116,22 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if (st != null && st.length() > 0) {
             setLocale();
         }
-        mComponent = getScreen();
-        if (mComponent == null) {
-            String nameScreen = getNameScreen();
-            if (nameScreen == null) {
-                nameScreen = intent.getStringExtra(Constants.NAME_MVP);
-            }
-
-            if (nameScreen != null && nameScreen.length() > 0) {
-                mComponent = getComponent(nameScreen);
-            }
+        String nameScreen = getNameScreen();
+        if (nameScreen == null) {
+            nameScreen = intent.getStringExtra(Constants.NAME_MVP);
         }
-        if (mComponent != null) {
+
+        if (nameScreen != null && nameScreen.length() > 0) {
+            mComponent = getComponent(nameScreen);
             if (mComponent.typeView == Screen.TYPE_VIEW.CUSTOM_ACTIVITY) {
                 parentLayout = inflate(this, getLayoutId(), null);
             } else {
                 parentLayout = inflate(this, mComponent.fragmentLayoutId, null);
             }
+        } else {
+            parentLayout = inflate(this, getLayoutId(), null);
+        }
+        if (nameScreen != null) {
             setContentView(parentLayout);
             if (mComponent.navigator != null) {
                 for (ViewHandler vh : mComponent.navigator.viewHandlers) {
@@ -161,6 +161,82 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             }
         }
         initView();
+//        super.onCreate(savedInstanceState);
+//        this.savedInstanceState = savedInstanceState;
+//        parentModelList = new ArrayList<>();
+//        preferences = Injector.getPreferences();
+//        componGlob = Injector.getComponGlob();
+//        TAG = componGlob.appParams.NAME_LOG_APP;
+//        mapFragment = componGlob.MapScreen;
+//        animatePanelList = new ArrayList<>();
+//        activityResultList = null;
+//        permissionsResultList = null;
+//        countProgressStart = 0;
+//        listInternetProvider = new ArrayList<>();
+//        listEvent = new ArrayList<>();
+//        String st = componGlob.appParams.nameLanguageInHeader;
+//        Intent intent = getIntent();
+//        workWithRecordsAndViews = new WorkWithRecordsAndViews();
+//        String paramJson = intent.getStringExtra(Constants.NAME_PARAM_FOR_SCREEN);
+//        if (paramJson != null && paramJson.length() >0) {
+//            JsonSimple jsonSimple = new JsonSimple();
+//            try {
+//                paramScreen = jsonSimple.jsonToModel(paramJson);
+//                paramScreenRecord = (Record) paramScreen.value;
+//            } catch (JsonSyntaxException e) {
+//                log(e.getMessage());
+//                e.printStackTrace();
+//            }
+//        }
+//        if (st != null && st.length() > 0) {
+//            setLocale();
+//        }
+//        mComponent = getScreen();
+//        if (mComponent == null) {
+//            String nameScreen = getNameScreen();
+//            if (nameScreen == null) {
+//                nameScreen = intent.getStringExtra(Constants.NAME_MVP);
+//            }
+//
+//            if (nameScreen != null && nameScreen.length() > 0) {
+//                mComponent = getComponent(nameScreen);
+//            }
+//        }
+//        if (mComponent != null) {
+//            if (mComponent.typeView == Screen.TYPE_VIEW.CUSTOM_ACTIVITY) {
+//                parentLayout = inflate(this, getLayoutId(), null);
+//            } else {
+//                parentLayout = inflate(this, mComponent.fragmentLayoutId, null);
+//            }
+//            setContentView(parentLayout);
+//            if (mComponent.navigator != null) {
+//                for (ViewHandler vh : mComponent.navigator.viewHandlers) {
+//                    View v = findViewById(vh.viewId);
+//                    if (v != null) {
+//                        v.setOnClickListener(navigatorClick);
+//                    }
+//                }
+//            }
+//            mComponent.initComponents(this);
+//            if (mComponent.moreWork != null) {
+//                mComponent.moreWork.startScreen();
+//            }
+//        }
+//
+//        if (this instanceof ICustom) {
+//            mComponent.setCustom((ICustom) this);
+//        }
+//        TextView title = (TextView) componGlob.findViewByName(parentLayout, "title");
+//        if (title != null && mComponent.title != null) {
+//            if (mComponent.args != null && mComponent.args.length > 0) {
+//                title.setText(String.format(mComponent.title, setFormatParam(mComponent.args)));
+//            } else {
+//                if (mComponent.title.length() > 0) {
+//                    title.setText(mComponent.title);
+//                }
+//            }
+//        }
+//        initView();
     }
 
     public void setLocale() {
@@ -655,8 +731,8 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     @Override
-    public void startDrawerFragment(Screen model, int containerFragmentId) {
-//        Screen model = mapFragment.get(nameMVP);
+    public void startDrawerFragment(String nameMVP, int containerFragmentId) {
+        Screen model = mapFragment.get(nameMVP);
         BaseFragment fragment = new BaseFragment();
         fragment.setModel(model);
         Bundle bundle =new Bundle();
@@ -668,7 +744,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     @Override
-    public void startScreen(Screen screen, boolean startFlag) {
+    public void startScreen(String screen, boolean startFlag) {
         startScreen(screen, startFlag, null, -1);
     }
 
@@ -681,15 +757,15 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     @Override
-    public void startScreen(Screen screen, boolean startFlag, Object object) {
+    public void startScreen(String screen, boolean startFlag, Object object) {
         startScreen(screen, startFlag, object, -1);
     }
 
     @Override
-    public void startScreen(Screen mComponent, boolean startFlag, Object object, int forResult) {
-//        Screen mComponent = mapFragment.get(nameMVP);
+    public void startScreen(String nameMVP, boolean startFlag, Object object, int forResult) {
+        Screen mComponent = mapFragment.get(nameMVP);
         Log.d("QWERT","startScreen mComponent="+mComponent);
-        String nameMVP = mComponent.nameComponent;
+//        String nameMVP = mComponent.nameComponent;
         if (mComponent == null || mComponent.typeView == null) {
             log("Нет Screens с именем " + nameMVP);
             return;

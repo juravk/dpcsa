@@ -1,6 +1,6 @@
 package com.dpcsa.jura.compon.interfaces_classes;
 
-import com.dpcsa.jura.compon.base.Screen;
+//import com.dpcsa.jura.compon.base.Screen;
 import com.dpcsa.jura.compon.json_simple.Field;
 import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
@@ -36,29 +36,29 @@ public class Menu extends Field{
         return item(icon, title, nameFragment, -1, start);
     }
 
-    public Menu item(int icon, String title, Screen screen) {
-        return item(icon, title, screen, -1, false);
-    }
-
-    public Menu item(int icon, String title, Screen screen, boolean start) {
-        return item(icon, title, screen, -1, start);
-    }
-
-    public Menu item(int icon, String title, Screen screen, int badge, boolean start) {
-        Record item = new Record();
-        item.add(new Field("icon", Field.TYPE_INTEGER, icon));
-        item.add(new Field("name", Field.TYPE_STRING, title));
-        item.add(new Field("nameFunc", Field.TYPE_SCREEN, screen));
-        item.add(new Field("badge", Field.TYPE_INTEGER, badge));
-        if (start && menuStart < 0) {
-            item.add(new Field("select", Field.TYPE_INTEGER, 1));
-            menuStart = menuList.size();
-        } else {
-            item.add(new Field("select", Field.TYPE_INTEGER, 0));
-        }
-        menuList.add(item);
-        return this;
-    }
+//    public Menu item(int icon, String title, Screen screen) {
+//        return item(icon, title, screen, -1, false);
+//    }
+//
+//    public Menu item(int icon, String title, Screen screen, boolean start) {
+//        return item(icon, title, screen, -1, start);
+//    }
+//
+//    public Menu item(int icon, String title, Screen screen, int badge, boolean start) {
+//        Record item = new Record();
+//        item.add(new Field("icon", Field.TYPE_INTEGER, icon));
+//        item.add(new Field("name", Field.TYPE_STRING, title));
+//        item.add(new Field("nameFunc", Field.TYPE_SCREEN, screen));
+//        item.add(new Field("badge", Field.TYPE_INTEGER, badge));
+//        if (start && menuStart < 0) {
+//            item.add(new Field("select", Field.TYPE_INTEGER, 1));
+//            menuStart = menuList.size();
+//        } else {
+//            item.add(new Field("select", Field.TYPE_INTEGER, 0));
+//        }
+//        menuList.add(item);
+//        return this;
+//    }
 
     public Menu divider(){
         Record item = new Record();

@@ -15,7 +15,7 @@ import com.dpcsa.jura.compon.interfaces_classes.ParamDB;
 public class CronApp extends MultiDexApplication {
     private static CronApp instance;
     private Context context;
-    private CronDeclareScreens cronDeclareScreens;
+//    private CronDeclareScreens cronDeclareScreens;
 
     public static CronApp getInstance() {
         if (instance == null) {
@@ -50,10 +50,11 @@ public class CronApp extends MultiDexApplication {
 
         DeclareParam declareParam = DeclareParam.build(context)
                 .setNetworkParams(new CronAppParams())
+                .setDeclareScreens(new CronDeclareScreens())
                 .setDB(new DatabaseManager(context, paramDB));
-        cronDeclareScreens = new CronDeclareScreens();
-        declareParam.setListScreens(cronDeclareScreens);
+//        cronDeclareScreens = new CronDeclareScreens();
+//        declareParam.setDeclareScreens(cronDeclareScreens);
     }
 
-    public CronDeclareScreens getCronDeclareScreens() {return cronDeclareScreens;}
+//    public CronDeclareScreens getCronDeclareScreens() {return cronDeclareScreens;}
 }

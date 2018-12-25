@@ -32,45 +32,61 @@ public class DeclareScreens<T>{
             FIELD = ParamModel.FIELD, ARGUMENTS = ParamModel.ARGUMENTS,
             STRINGARRAY = ParamModel.STRINGARRAY, DATAFIELD = ParamModel.DATAFIELD;
 
-//    private Map<String, Screen> MapScreen;
-//    protected ComponGlob componGlob;
+    private Map<String, Screen> MapScreen;
+    protected ComponGlob componGlob;
 
-    public void declareScreen() {
-
+    public DeclareScreens() {
+        componGlob = Injector.getComponGlob();
+        MapScreen = componGlob.MapScreen;
     }
 
+//    public void declareScreen() {
+//
+//    }
+
     public void initScreen() {
-        declareScreen();
-        Class c = this.getClass();
-        java.lang.reflect.Field[] ff = c.getFields();
-        ComponGlob componGlob = Injector.getComponGlob();
-        Map<String, Screen> MapScreen = componGlob.MapScreen;
-//        Class c = obj.getClass();
-//        Field field = c.getField("name");
-//        String nameValue = (String) field.get(obj)
-        for (java.lang.reflect.Field field : ff) {
-//            Log.d("QWERT","initScreen TYPE="+field.getType().getSimpleName()+"<< NAME="+field.getName());
-            if (field.getType().getSimpleName().equals("Screen")) {
-                Log.d("QWERT","initScreen TYPE="+field.getType().getSimpleName()+"<< NAME="+field.getName());
-                Screen sc = null;
-                try {
-                    sc = (Screen) field.get(this);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                sc.nameComponent = field.getName();
-                MapScreen.put(sc.nameComponent, sc);
-                String par = sc.getParamModel();
-                if (par != null && par.length() > 0) {
-                    String[] param = par.split(Constants.SEPARATOR_LIST);
-                    int ik = param.length;
-                    for (int i = 0; i < ik; i++) {
-                        componGlob.addParam(param[i]);
-                    }
+        for (Screen value : MapScreen.values()) {
+            String par = value.getParamModel();
+            if (par != null && par.length() > 0) {
+                String[] param = par.split(Constants.SEPARATOR_LIST);
+                int ik = param.length;
+                for (int i = 0; i < ik; i++) {
+                    componGlob.addParam(param[i]);
+//                    ComponGlob.getInstance().addParam(param[i]);
                 }
             }
         }
-//        for (Screen value : MapScreen.values()) {
+//        declareScreen();
+//        Class c = this.getClass();
+//        java.lang.reflect.Field[] ff = c.getFields();
+//        ComponGlob componGlob = Injector.getComponGlob();
+//        MapScreen = componGlob.MapScreen;
+//        Class c = obj.getClass();
+//        Field field = c.getField("name");
+//        String nameValue = (String) field.get(obj)
+//        for (java.lang.reflect.Field field : ff) {
+////            Log.d("QWERT","initScreen TYPE="+field.getType().getSimpleName()+"<< NAME="+field.getName());
+//            if (field.getType().getSimpleName().equals("Screen")) {
+//                Log.d("QWERT","initScreen TYPE="+field.getType().getSimpleName()+"<< NAME="+field.getName());
+//                Screen sc = null;
+//                try {
+//                    sc = (Screen) field.get(this);
+//                } catch (IllegalAccessException e) {
+//                    e.printStackTrace();
+//                }
+//                sc.nameComponent = field.getName();
+//                MapScreen.put(sc.nameComponent, sc);
+//                String par = sc.getParamModel();
+//                if (par != null && par.length() > 0) {
+//                    String[] param = par.split(Constants.SEPARATOR_LIST);
+//                    int ik = param.length;
+//                    for (int i = 0; i < ik; i++) {
+//                        componGlob.addParam(param[i]);
+//                    }
+//                }
+//            }
+//        }
+//        for (String value : MapScreen.values()) {
 //            String par = value.getParamModel();
 //            if (par != null && par.length() > 0) {
 //                String[] param = par.split(Constants.SEPARATOR_LIST);
@@ -106,32 +122,32 @@ public class DeclareScreens<T>{
 //        this.MapScreen = MapScreen;
 //    }
 
-    protected Screen fragment(int layoutId, String title, String... args) {
-        Screen mc = new Screen(layoutId, title, args);
+    protected Screen fragment(String name, int layoutId, String title, String... args) {
+        Screen mc = new Screen(name, layoutId, title, args);
         mc.typeView = Screen.TYPE_VIEW.FRAGMENT;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
-    protected Screen fragment(int layoutId, Class<T> additionalWork) {
-        Screen mc = new Screen(layoutId);
+    protected Screen fragment(String name, int layoutId, Class<T> additionalWork) {
+        Screen mc = new Screen(name, layoutId);
         mc.typeView = Screen.TYPE_VIEW.FRAGMENT;
         mc.additionalWork = additionalWork;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
-    protected Screen fragment(int layoutId) {
-        Screen mc = new Screen(layoutId);
+    protected Screen fragment(String name, int layoutId) {
+        Screen mc = new Screen(name, layoutId);
         mc.typeView = Screen.TYPE_VIEW.FRAGMENT;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
-    protected Screen fragment(Class customFragment) {
-        Screen mc = new Screen(customFragment);
+    protected Screen fragment(String name, Class customFragment) {
+        Screen mc = new Screen(name, customFragment);
         mc.typeView = Screen.TYPE_VIEW.CUSTOM_FRAGMENT;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
@@ -141,29 +157,29 @@ public class DeclareScreens<T>{
 //        return mc;
 //    }
 
-    protected Screen activity(Class customActivity) {
-        Screen mc = new Screen(customActivity);
+    protected Screen activity(String name, Class customActivity) {
+        Screen mc = new Screen(name, customActivity);
         mc.typeView = Screen.TYPE_VIEW.CUSTOM_ACTIVITY;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
-    protected Screen activity(int layoutId, String title, String... args) {
-        Screen mc = new Screen(layoutId, title, args);
+    protected Screen activity(String name, int layoutId, String title, String... args) {
+        Screen mc = new Screen(name, layoutId, title, args);
         mc.typeView = Screen.TYPE_VIEW.ACTIVITY;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
-    protected Screen activity(int layoutId) {
-        Screen mc = new Screen(layoutId);
+    protected Screen activity(String name, int layoutId) {
+        Screen mc = new Screen(name, layoutId);
         mc.typeView = Screen.TYPE_VIEW.ACTIVITY;
-//        MapScreen.put(name, mc);
+        MapScreen.put(name, mc);
         return mc;
     }
 
-    protected Screen activity(int layoutId, Class<T> additionalWork) {
-        Screen mc = new Screen(layoutId);
+    protected Screen activity(String name, int layoutId, Class<T> additionalWork) {
+        Screen mc = new Screen(name, layoutId);
         mc.typeView = Screen.TYPE_VIEW.ACTIVITY;
         mc.additionalWork = additionalWork;
 //        MapScreen.put(name, mc);
@@ -261,11 +277,11 @@ public class DeclareScreens<T>{
         return new ParamView(viewId, fieldType, style);
     }
 
-    public ParamView view(int viewId, Screen[] screens) {
+    public ParamView view(int viewId, String [] screens) {
         return new ParamView(viewId, screens);
     }
 
-    public ParamView view(int viewId, Screen[] screens, int[] containerId) {
+    public ParamView view(int viewId, String[] screens, int[] containerId) {
         return new ParamView(viewId, screens, containerId);
     }
 
@@ -285,15 +301,15 @@ public class DeclareScreens<T>{
         return new ViewHandler(fieldNameFragment);
     }
 
-    public ViewHandler handler(int viewId, Screen screen) {
+    public ViewHandler handler(int viewId, String screen) {
         return new ViewHandler(viewId, screen);
     }
 
-    public ViewHandler handler(int viewId, Screen screen, ActionsAfterResponse afterResponse) {
+    public ViewHandler handler(int viewId, String screen, ActionsAfterResponse afterResponse) {
         return new ViewHandler(viewId, screen, afterResponse);
     }
 
-    public ViewHandler handler(int viewId, Screen screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
+    public ViewHandler handler(int viewId, String screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
         return new ViewHandler(viewId, screen, paramForScreen);
     }
 
@@ -309,12 +325,12 @@ public class DeclareScreens<T>{
         return new ViewHandler(viewId, type, paramModel);
     }
 
-    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel, Screen screen) {
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel, String screen) {
         return new ViewHandler(viewId, type, paramModel, screen);
     }
 
     public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
-                         Screen screen, boolean changeEnabled, int... mustValid) {
+                               String screen, boolean changeEnabled, int... mustValid) {
         return new ViewHandler(viewId, type, paramModel, screen, changeEnabled, mustValid);
     }
 

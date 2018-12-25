@@ -93,10 +93,9 @@ public class PagerFComponent extends BaseComponent {
 
         @Override
         public Fragment getItem(int position) {
-//            Screen model = iBase.getBaseActivity().mapFragment.get(paramMV.paramView.nameFragment[position]);
-            Screen model = paramMV.paramView.screens[position];
+            Screen model = iBase.getBaseActivity().mapFragment.get(paramMV.paramView.screens[position]);
             BaseFragment fragment = new BaseFragment();
-            fragment.setModel((Screen) model);
+            fragment.setModel(model);
             return fragment;
         }
 

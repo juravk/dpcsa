@@ -25,8 +25,8 @@ public class DrawerComponent extends BaseComponent{
         }
         activity.drawer = drawer;
         iBase.setFragmentsContainerId(paramMV.paramView.layoutTypeId[0]);
-        Screen screen = paramMV.paramView.screens[0];
-        if (screen != null) {
+        String screen = paramMV.paramView.screens[0];
+        if (screen != null && screen.length() > 0) {
             iBase.startScreen(screen, true);
         }
         iBase.startDrawerFragment(paramMV.paramView.screens[1], paramMV.paramView.layoutTypeId[1]);

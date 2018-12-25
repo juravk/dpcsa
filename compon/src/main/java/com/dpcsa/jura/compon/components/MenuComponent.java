@@ -2,8 +2,6 @@ package com.dpcsa.jura.compon.components;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import com.dpcsa.jura.compon.single.ComponGlob;
 import com.dpcsa.jura.compon.base.BaseActivity;
 import com.dpcsa.jura.compon.base.BaseComponent;
 import com.dpcsa.jura.compon.base.BaseProvider;
@@ -16,7 +14,6 @@ import com.dpcsa.jura.compon.json_simple.ListRecords;
 import com.dpcsa.jura.compon.json_simple.Record;
 import com.dpcsa.jura.compon.param.ParamComponent;
 import com.dpcsa.jura.compon.presenter.ListPresenter;
-import com.dpcsa.jura.compon.single.ComponPrefTool;
 
 public class MenuComponent extends BaseComponent {
     RecyclerView recycler;
@@ -101,8 +98,8 @@ public class MenuComponent extends BaseComponent {
         if (select && selectViewHandler != null) {
             Record record = listData.get(position);
             componGlob.setParam(record);
-            Screen screen = (Screen) record.getField(selectViewHandler.nameFieldScreen).value;
-            if (screen != null) {
+            String screen = (String) record.getField(selectViewHandler.nameFieldScreen).value;
+            if (screen != null && screen.length() > 0) {
                 iBase.startScreen(screen, true);
             }
         }

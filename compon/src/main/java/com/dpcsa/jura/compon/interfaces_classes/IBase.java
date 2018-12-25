@@ -24,10 +24,10 @@ public interface IBase {
     void sendActualEvent(int sender, Object paramEvent);
     ParentModel getParentModel(String name);
     Field getProfile();
-    void startScreen(Screen screen, boolean startFlag, Object object, int forResult);
-    void startScreen(Screen screen, boolean startFlag, Object object);
-    void startScreen(Screen screen, boolean startFlag);
-    void startDrawerFragment(Screen screen, int containerFragmentId);
+    void startScreen(String screen, boolean startFlag, Object object, int forResult);
+    void startScreen(String screen, boolean startFlag, Object object);
+    void startScreen(String screen, boolean startFlag);
+    void startDrawerFragment(String screen, int containerFragmentId);
     void backPressed();
     void progressStart();
     void progressStop();

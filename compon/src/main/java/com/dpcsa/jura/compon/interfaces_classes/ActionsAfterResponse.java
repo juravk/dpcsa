@@ -11,7 +11,7 @@ import static com.dpcsa.jura.compon.interfaces_classes.ViewHandler.TYPE;
 public class ActionsAfterResponse {
     public List<ViewHandler> viewHandlers = new ArrayList<>();
 
-    public ActionsAfterResponse startScreen(Screen screen) {
+    public ActionsAfterResponse startScreen(String screen) {
         viewHandlers.add(new ViewHandler(0, screen));
         return this;
     }

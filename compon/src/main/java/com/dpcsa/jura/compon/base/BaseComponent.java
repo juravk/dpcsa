@@ -419,7 +419,7 @@ public abstract class BaseComponent {
                                         position, null);
                             } else {
                                 componGlob.setParam(record);
-                                iBase.startScreen((Screen) record.getValue(vh.nameFieldScreen), false);
+                                iBase.startScreen((String) record.getValue(vh.nameFieldScreen), false);
                             }
                             break;
                         case RESULT_RECORD :
