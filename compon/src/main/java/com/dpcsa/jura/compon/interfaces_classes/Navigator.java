@@ -15,6 +15,11 @@ public class Navigator {
         }
     }
 
+    public Navigator add(ViewHandler handler) {
+        viewHandlers.add(handler);
+        return this;
+    }
+
 //    public Navigator add(String fieldNameFragment) {
 //        viewHandlers.add(new ViewHandler(fieldNameFragment));
 //        return this;

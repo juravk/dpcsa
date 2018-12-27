@@ -3,6 +3,7 @@ package com.dpcsa.jura.compon.components;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.dpcsa.jura.compon.single.ComponGlob;
@@ -43,8 +44,9 @@ public class RecyclerComponent extends BaseComponent {
         listData = new ListRecords();
         if (paramMV.paramView.selected) {
             if (navigator == null) {
-                navigator = new Navigator(new ViewHandler(0, ViewHandler.TYPE.SELECT));
+                navigator = new Navigator();
             }
+            navigator.add(new ViewHandler(0, ViewHandler.TYPE.SELECT));
             listPresenter = new ListPresenter(this);
         }
         provider = new BaseProvider(listData);

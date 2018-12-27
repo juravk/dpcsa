@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cron_auto_С</string>
+    <string name="app_name">Cron_auto_DP</string>
     <string name="hint_id">Id</string>
     <string name="hint_name">Название</string>
     <string name="save">Сохранить</string>
